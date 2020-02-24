@@ -17,28 +17,17 @@ function Market () {
     fetchData()
   }, [])
 
-//   componentDidMount() {
-//       const rootRef = firebase.database().ref().child('Laptops');
-//       const nameRef = rootRef.child('name');
-//       speedRef.on('value', snap => {
-//           this.setState({
-//             name: snap.val()
-//           });
-//       });
-//   }
-
   return (
     
     <div className="App">
-      <ul>
+      
         {laptops.map(laptop => (
-          <li key={laptop.brandname}>{laptop.brandname}</li>
+          <h3 key={laptop.prodID}>{laptop.brandname}, {laptop.price} euros, {laptop.condition}, {laptop.memory}
+          , {laptop.screensize}, {laptop.ram} GB RAM</h3>
         ))}
-        {laptops.map(laptop => (
-          <li key={laptop.brandname}>{laptop.processor}</li>
-        ))}
-        &nbsp;
-      </ul>
+
+        <br/>
+      
     </div>
   ); 
 }
