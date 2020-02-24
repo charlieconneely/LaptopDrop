@@ -7,31 +7,36 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
+import * as firebase from 'firebase';
 
-function App() {
-  return (
-    <BrowserRouter>
-      <div className="App">
+class App extends React.Component {
 
-          {/* Add navbar with login/reg on the right and make it look nice*/}
-               
-        <Navbar bg="danger" variant="light">
-          <Navbar.Brand href="#home">Options</Navbar.Brand>
-            <Nav className="mr-auto">
-              <Nav.Link href="/">Home</Nav.Link>
-              
-              <Nav.Link href="/login">Login/reg</Nav.Link>
-            </Nav>
-          </Navbar>
-      </div>
+  render() {
+    return (
+      <BrowserRouter>
+        <div className="App">
 
-      <Switch>
-        <Route exact path="/" component={Home} />
-        {/* <Route exact path="/login" component={Login} /> */}
-      </Switch>
+            {/* Add navbar with login/reg on the right and make it look nice*/}
+                
+          <Navbar bg="danger" variant="light">
+            <Navbar.Brand href="/">Home</Navbar.Brand>
+              <Nav className="mr-auto">
+                <Nav.Link >Options </Nav.Link>
+                
+                <Nav.Link href="/login">Login/Register</Nav.Link>
+              </Nav>
+            </Navbar>
 
-    </BrowserRouter>
-  );
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/login" component={Login} /> 
+          </Switch>
+        </div>
+
+
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;
