@@ -1,9 +1,8 @@
 .App {
   text-align: center;
-  background-color: rgb(134, 114, 125);
+  background-color: #00ffff;
   height: 100%;
   width: 100%;
-  color: rgb(196, 193, 193);
   font-size: 20px;
 }
 
@@ -12,10 +11,9 @@ nav {
   justify-content: space-around;
   align-items: center;
   min-height: 8vh;
-  background-color: rgb(134, 114, 125);
+  background-color: #00ffff;
   font-family: 'Times New Roman', Times, serif;   
-  font-size: 30px;
-  color:#5D4954;
+  font-size: 30px;  
 }
 
 .App-logo {

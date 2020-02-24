@@ -1,18 +1,21 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import '../App.css';
-// import firebase from 'firebase';
-// import {firebaseConfig} from './index.js'; 
-import * as firebase from 'firebase';
+import firebase from '../firebase';
 
-class Market extends React.Component {
+function Market () {
 
-  constructor() {
-      super();
-      this.state = {
-          name: 'hp bla bla'
-      };
-  }
+  const [laptops, setLaptops] = React.useState([]);
+  //const [newLaptopName, setNewLaptopName] = React.useState();
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const db = firebase.firestore();
+      const data = await db.collection("Laptops").get();
+      setLaptops(data.docs.map(doc => doc.data()))
+    }
+    fetchData()
+  }, [])
 
 //   componentDidMount() {
 //       const rootRef = firebase.database().ref().child('Laptops');
@@ -24,14 +27,20 @@ class Market extends React.Component {
 //       });
 //   }
 
-  render() {
-    return (
-      
-      <div className="App">
-          <h1>{this.state.name}</h1>
-      </div>
-    );
-  }
+  return (
+    
+    <div className="App">
+      <ul>
+        {laptops.map(laptop => (
+          <li key={laptop.brandname}>{laptop.brandname}</li>
+        ))}
+        {laptops.map(laptop => (
+          <li key={laptop.brandname}>{laptop.processor}</li>
+        ))}
+        &nbsp;
+      </ul>
+    </div>
+  ); 
 }
 
 export default Market;
