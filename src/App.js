@@ -1,36 +1,51 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Login from './components/login';
 import Home from './components/home';
+import Market from './components/market';
+import Registration from './components/registration';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
-function App() {
-  return (
-    <BrowserRouter>
-      <div className="App">
-
-          {/* Add navbar with login/reg on the right and make it look nice*/}
-               
-        <Navbar bg="danger" variant="light">
-          <Navbar.Brand href="#home">Options</Navbar.Brand>
-            <Nav className="mr-auto">
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/login">Login/reg</Nav.Link>
-            </Nav>
-          </Navbar>
-      </div>
-
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} /> 
-      </Switch>
-
-    </BrowserRouter>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <div className="App">
+        
+        {/* nav bar */}
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                 {/* website name */}
+                <a class="navbar-brand">PC MarketPlace</a>
+              </div>
+              <ul class="nav navbar-nav">
+                 {/* links */}
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/market">Market</a></li>
+                <li><a href="#">Page 2</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                 {/* login/reg */}
+                <li><a href="/registration"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              </ul>
+            </div>
+          </nav>
+          <Switch>
+             {/* routes for links */}
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} /> 
+            <Route path="/registration" component={Registration} /> 
+            <Route path="/market" component={Market}/>
+    </Switch>
+        </div>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;

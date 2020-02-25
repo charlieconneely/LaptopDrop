@@ -1,5 +1,19 @@
 .App {
   text-align: center;
+  background-color: #00ffff;
+  height: 100%;
+  width: 100%;
+  font-size: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 8vh;
+  background-color: #00ffff;
+  font-family: 'Times New Roman', Times, serif;   
+  font-size: 30px;  
 }
 
 .App-logo {
