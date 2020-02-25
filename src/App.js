@@ -3,6 +3,7 @@ import './App.css';
 import Login from './components/login';
 import Home from './components/home';
 import Market from './components/market';
+import Registration from './components/registration';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -13,25 +14,36 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <div className="App">
-
-          <Navbar bg="danger" variant="light">
-            {/* <Navbar.Brand href="/">Home</Navbar.Brand> */}
-              <Nav className="mr-auto">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link >Options </Nav.Link>
-                
-                <Nav.Link href="/login">Login/Register</Nav.Link>
-                <Nav.Link href="/market"> Market</Nav.Link>
-              </Nav>
-            </Navbar>
-
+        
+        {/* nav bar */}
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                 {/* website name */}
+                <a class="navbar-brand">PC MarketPlace</a>
+              </div>
+              <ul class="nav navbar-nav">
+                 {/* links */}
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/market">Market</a></li>
+                <li><a href="#">Page 2</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                 {/* login/reg */}
+                <li><a href="/registration"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              </ul>
+            </div>
+          </nav>
           <Switch>
+             {/* routes for links */}
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} /> 
+            <Route path="/registration" component={Registration} /> 
             <Route path="/market" component={Market}/>
-          </Switch>
+    </Switch>
         </div>
-      </BrowserRouter>   
+      </BrowserRouter>
     );
   }
 }
