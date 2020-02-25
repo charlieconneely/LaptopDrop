@@ -19,7 +19,6 @@ function App() {
           <Navbar.Brand href="#home">Options</Navbar.Brand>
             <Nav className="mr-auto">
               <Nav.Link href="/">Home</Nav.Link>
-              
               <Nav.Link href="/login">Login/reg</Nav.Link>
             </Nav>
           </Navbar>
@@ -27,7 +26,7 @@ function App() {
 
       <Switch>
         <Route exact path="/" component={Home} />
-        {/* <Route exact path="/login" component={Login} /> */}
+        <Route exact path="/login" component={Login} /> 
       </Switch>
 
     </BrowserRouter>
