@@ -3,6 +3,7 @@ import './App.css';
 import Login from './components/login';
 import Home from './components/home';
 import Market from './components/market';
+import Market2 from './components/market2';
 import Registration from './components/registration';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar';
@@ -24,9 +25,9 @@ class App extends React.Component {
               </div>
               <ul class="nav navbar-nav">
                  {/* links */}
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="/market">Market</a></li>
-                <li><a href="#">Page 2</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/market">Laptops</a></li>
+                <li><a href="/market2">PCs</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
                  {/* login/reg */}
@@ -41,6 +42,7 @@ class App extends React.Component {
             <Route path="/login" component={Login} /> 
             <Route path="/registration" component={Registration} /> 
             <Route path="/market" component={Market}/>
+            <Route path="/market2" component={Market2}/>
     </Switch>
         </div>
       </BrowserRouter>

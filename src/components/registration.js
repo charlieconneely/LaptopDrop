@@ -17,7 +17,7 @@ class Registration extends React.Component {
         <p>Username: </p> <input type="text" name="username" value="john123"></input> 
         <p>Password: </p> <input type="password" name="password"></input>
         <Helmet>
-          <style>{'body { background-color: #00ffff; }'}</style>        
+          <style>{'body { background-color: #DAD9D8; }'}</style>        
         </Helmet>
       </div>
     );

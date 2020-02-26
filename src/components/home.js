@@ -13,7 +13,7 @@ class Home extends React.Component {
         {/* Implement carousel */}
 
         <Helmet>
-          <style>{'body { background-color: #00ffff; }'}</style>        
+          <style>{'body { background-color: #DAD9D8; }'}</style>        
         </Helmet>
       </div>
     );
