@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import '../App.css';
 import firebase from '../firebase';
+import LaptopItem from './items/laptopItem';
 
 function Market () {
 
@@ -19,17 +20,16 @@ function Market () {
 
   return (
     
-    <div className="App">
+    <div className="items">
       
         {laptops.map(laptop => (
-          <h3 key={laptop.prodID}> Manufacturer: {laptop.brandname}, cost: €{laptop.price} , condition: {laptop.condition}, storage: {laptop.memory}
-          , resolution: {laptop.screensize}, RAM: {laptop.ram}GB</h3>
+          <LaptopItem key={laptop.prodID} laptop={laptop}></LaptopItem>
         ))}
 
         <br/>
         <Helmet>
           <style>{'body { background-color: #DAD9D8; }'}</style>        
-        </Helmet>
+        </Helmet> 
       
     </div>
   ); 

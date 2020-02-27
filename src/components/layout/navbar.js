@@ -8,8 +8,11 @@ const Navbar = () => {
          <nav className="nav-wrapper grey darken-3">       
             <div>
                 <Link to='/' className="brand-logo">PC MARKETPLACE</Link>
+
+                {/* ref - https://www.youtube.com/watch?v=jKqnfzdPqJI
+                still need to use auth to determine if user is signed it  */}
                 <SignedInLinks/>
-                <SingedOutLinks/>
+                <SingedOutLinks/> 
             </div>            
         </nav>
     )
