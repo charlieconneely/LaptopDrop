@@ -12,8 +12,9 @@ class Registration extends React.Component {
       <div>
         <h1>Welcome to the registration page</h1>
         <br/>
-        <h3>Please enter your login details below:</h3>
+        <h3>Please enter your details below:</h3>
         <br/>
+        <p>Email: </p> <input type="text" name="email"></input>
         <p>Username: </p> <input type="text" name="username" value="john123"></input> 
         <p>Password: </p> <input type="password" name="password"></input>
         <Helmet>
