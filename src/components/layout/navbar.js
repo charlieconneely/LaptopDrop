@@ -2,12 +2,14 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import SignedInLinks from './signedIn';
 import SingedOutLinks from './signedOut';
+import { tsConstructorType } from '@babel/types';
 
 const Navbar = () => {
+
     return (       
          <nav className="nav-wrapper grey darken-3">       
             <div>
-                <Link to='/' className="brand-logo">PC MARKETPLACE</Link>
+                &emsp; <Link to='/' className="brand-logo">PC MARKETPLACE</Link>
 
                 {/* ref - https://www.youtube.com/watch?v=jKqnfzdPqJI
                 still need to use auth to determine if user is signed it  */}

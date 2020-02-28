@@ -33,7 +33,9 @@ class LaptopItem extends React.Component {
                             </footer>
                        </blockquote>
                    </Card.Body>
-                   <button className="button">Add to Basket</button>
+                   <Card.Footer>
+                     <button className="button">Add to Basket</button>
+                   </Card.Footer>
                </Card>
            </div>
        )
