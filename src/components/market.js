@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import '../App.css';
-import firebase from '../firebase';
+import firebase from '../fbConfig';
 import LaptopItem from './items/laptopItem';
 
 function Market () {
