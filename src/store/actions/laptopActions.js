@@ -1,7 +1,7 @@
 //  make async actions with database using redux store and thunk 
 
 export const postLaptop = (laptop) => {
-    return (dispatch, getState, {getFirestore}) => {
+    return (dispatch, getState, {getFirbase, getFirestore}) => {
         const firestore = getFirestore();
         firestore.collection('Laptops').add({
             ...laptop,

@@ -2,48 +2,47 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import '../../App.css';
 import firebase from '../../fbConfig'
+import {connect} from 'react-redux'
+import {signIn} from '../../store/actions/authActions'
 
 class Login extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.login = this.login.bind(this);
-    this.state = {
-      email:'',
-      password:''
-    }
+  state = {
+    email:'',
+    password:''
   }
 
-  login(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
-    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{      
-    }).catch((error)=> {
-      console.log(error);
-    })
+    this.props.signIn(this.state);
   }
 
-  handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  handleChange = (e) => {
+    this.setState({ [e.target.id]: e.target.value });
   }
 
   render() {
+    const {authError} = this.props;
     return (
       // Login page
       <div className="container">
-        <form className="white">
+        <form className="white" onSubmit={this.handleSubmit}>
 
           <h5 className="grey-text text-darken-3">Login</h5>
           <div className="input-field">
             <label htmlFor="email">Email</label>
-            <input onChange={this.handleChange} value={this.state.email} type="email" name="email"></input>
+            <input onChange={this.handleChange} value={this.state.email} type="email" id="email"></input>
           </div>
           <div className="input-field">
             <label htmlFor="password">Password</label>
-            <input onChange={this.handleChange} value={this.state.password} type="password" name="password"></input>
+            <input onChange={this.handleChange} value={this.state.password} type="password" id="password"></input>
           </div>
           <div>
-            <button className="btn blue lighten-1 z-depth-0" type="submit" onClick={this.login}>Login</button>
+            <button className="btn blue lighten-1 z-depth-0" type="submit">Login</button>
+            <div className="red-text">
+              {/* if authentication error exists - display authentication error */}
+              {authError ? <p>{authError}</p> : null}
+            </div>
           </div>
         </form>
         <Helmet>
@@ -54,4 +53,16 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signIn: (creds) => dispatch(signIn(creds))
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    authError: state.auth.authError
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

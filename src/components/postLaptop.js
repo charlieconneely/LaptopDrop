@@ -1,6 +1,6 @@
 import React , {Component} from 'react';
 import {connect} from 'react-redux'
-import {postLaptop} from './store/actions/laptopActions';
+import {postLaptop} from '../store/actions/laptopActions';
 
 class PostLaptop extends React.Component {
 
@@ -60,6 +60,8 @@ class PostLaptop extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        // calls dipatch to postLaptop method in laptopActions.js
+        // providing laptop from current state 
         postLaptop: (laptop) => dispatch(postLaptop(laptop))
     }
 }

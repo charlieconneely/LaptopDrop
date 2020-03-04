@@ -1,38 +1,38 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
+import React, { Component } from 'react';
+//import { Helmet } from 'react-helmet';
 import '../App.css';
-import firebase from '../fbConfig';
+//import firebase from '../fbConfig';
 import LaptopItem from './items/laptopItem';
+import { firestoreConnect } from 'react-redux-firebase';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
-function Market () {
+class Market extends Component {
+  
+  render() {
+      const {laptops} = this.props;
 
-  const [laptops, setLaptops] = React.useState([]);
-  //const [newLaptopName, setNewLaptopName] = React.useState();
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const db = firebase.firestore();
-      const data = await db.collection("Laptops").get();
-      setLaptops(data.docs.map(doc => doc.data()))
+      return (   
+        <div className="container">    
+          <div className="row">          
+            <LaptopItem laptops={laptops}/>                 
+          </div>     
+        </div>
+      ); 
     }
-    fetchData()
-  }, [])
+  }
 
-  return (
-    
-    <div className="items">
-      
-        {laptops.map(laptop => (
-          <LaptopItem key={laptop.prodID} laptop={laptop}></LaptopItem>
-        ))}
-
-        <br/>
-        <Helmet>
-          <style>{'body { background-color: #DAD9D8; }'}</style>        
-        </Helmet> 
-      
-    </div>
-  ); 
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    // https://www.youtube.com/watch?v=DyavQ5Q015U&list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3&index=19
+    laptops: state.firestore.ordered.Laptops
+  }
 }
 
-export default Market;
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect([
+    {collection: 'Laptops'}
+  ])
+)(Market);
