@@ -1,7 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import '../../App.css';
-import firebase from '../../fbConfig'
 import {connect} from 'react-redux'
 import {signIn} from '../../store/actions/authActions'
 

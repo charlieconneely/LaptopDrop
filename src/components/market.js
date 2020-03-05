@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-//import { Helmet } from 'react-helmet';
 import '../App.css';
-//import firebase from '../fbConfig';
 import LaptopItem from './items/laptopItem';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
@@ -25,11 +23,13 @@ class Market extends Component {
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    // https://www.youtube.com/watch?v=DyavQ5Q015U&list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3&index=19
+    // map laptops const to Laptops collection in firestore
     laptops: state.firestore.ordered.Laptops
   }
 }
 
+// info on connect() - https://blog.logrocket.com/react-redux-connect-when-and-how-to-use-it-f2a1edab2013/
+// compose impelemented to connect both state and firestore db to Market 
 export default compose(
   connect(mapStateToProps),
   firestoreConnect([

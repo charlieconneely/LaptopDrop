@@ -3,8 +3,7 @@ const initState = {
     authError: null
 }
 
-const authReducer = (state = initState, action) => {
-    
+const authReducer = (state = initState, action) => {  
     if (action.type === 'LOGIN_ERROR') {
         console.log('login error');
         return {

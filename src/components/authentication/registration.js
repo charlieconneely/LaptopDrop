@@ -15,6 +15,8 @@ class Registration extends React.Component {
     }
   }
 
+  // still need to set up signup function in redux store 
+  // (similar to signup) 
   signup(e) {
     e.preventDefault();
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)

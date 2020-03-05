@@ -4,31 +4,28 @@ import {postLaptop} from '../store/actions/laptopActions';
 
 class PostLaptop extends React.Component {
 
-    state = {
-        brandname:'',
-        condition:'',
-        memory:'',
-        price:200,
-        processor:'Intel Core i5',
-        prodID:9898,
-        ram:8,
-        screensize:14
-    }   
+  state = {
+      brandname:'',
+      condition:'',
+      memory:'',
+      price:200,
+      processor:'Intel Core i5',
+      prodID:9898,
+      ram:8,
+      screensize:14
+  }    
   
-
   handleChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    //console.log(this.state);
     this.props.postLaptop(this.state)
   }
 
   render() {
     return (
-      // Login page
       <div className="container">
         <form onSubmit={this.handleSubmit} className="white">
 

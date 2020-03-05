@@ -3,7 +3,6 @@ import {NavLink} from 'react-router-dom';
 import '../../App.css';
 import { connect } from 'react-redux'; 
 import { signOut } from '../../store/actions/authActions';
-import { sign } from 'crypto';
 
 const SingedInLinks = (props) => {
     return (
