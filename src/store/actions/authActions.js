@@ -1,3 +1,4 @@
+
 export const signIn = (creds) => {
     return (dispatch, getState, {getFirebase}) => {
         // initialise firebase instance
@@ -10,6 +11,21 @@ export const signIn = (creds) => {
             dispatch({ type: 'LOGIN_SUCCESS' })
         }).catch((error) => {
             dispatch({ type: 'LOGIN_ERROR', error})
+        })
+    }
+}
+
+export const signUp = (creds) => {
+    return (dispatch, getState, {getFirebase}) => {
+        const firebase = getFirebase();
+
+        firebase.auth().createUserWithEmailAndPassword(
+            creds.email,
+            creds.password
+        ).then(() => {
+            dispatch({type: 'SIGNUP_SUCCESS'})
+        }).catch((error) => {
+            dispatch({ type: 'SIGNUP_ERROR', error })
         })
     }
 }

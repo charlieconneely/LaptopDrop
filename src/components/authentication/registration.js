@@ -1,59 +1,57 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import '../../App.css';
-import firebase from '../../fbConfig'
+import { Redirect } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {signUp} from '../../store/actions/authActions'
 
 class Registration extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.signup = this.signup.bind(this);
-    this.state = {
-      email:'',
-      password:''
-    }
+  state = {
+    email:'',
+    password:''
   }
 
-  // still need to set up signup function in redux store 
-  // (similar to signup) 
-  signup(e) {
+
+  handleSubmit = (e) => {
     e.preventDefault();
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-    .catch((error)=> {
-      console.log(error);
-    })
+    this.props.signUp(this.state);
   }
 
-  handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  handleChange = (e) => {
+    this.setState({ [e.target.id]: e.target.value });
   }
 
   render() {
+    const {auth} = this.props;
+    const {authError} = this.props; // unused
+    // if user is signed in - redirect to home page
+    if (auth.uid) return <Redirect to="/"/>
+
     return (
-      // Login page
+      // Registration page
       <div className="container">
-        <form className="white">
+        <form className="white" onSubmit={this.handleSubmit}>
 
           <h5 className="grey-text text-darken-3">Sign Up</h5>
           <div className="input-field">
             <label htmlFor="firstName">First Name</label>
-            <input onChange={this.handleChange} type="text" id="firstName"></input>
+            <input onChange={this.handleChange} type="text" name="firstName"></input>
           </div>
           <div className="input-field">
             <label htmlFor="lastName">Last Name</label>
-            <input onChange={this.handleChange} type="text" id="lastName"></input>
+            <input onChange={this.handleChange} type="text" name="lastName"></input>
           </div>
           <div className="input-field">
             <label htmlFor="email">Email</label>
-            <input onChange={this.handleChange} value={this.state.email} type="email" name="email"></input>
+            <input onChange={this.handleChange} value={this.state.email} type="email" id="email"></input>
           </div>
           <div className="input-field">
             <label htmlFor="password">Password</label>
-            <input onChange={this.handleChange} value={this.state.password} type="password" name="password"></input>
+            <input onChange={this.handleChange} value={this.state.password} type="password" id="password"></input>
           </div>
           <div>
-            <button className="btn blue lighten-1 z-depth-0" type="submit" onClick={this.signup}>Sign Up</button>
+            <button className="btn blue lighten-1 z-depth-0" type="submit">Sign Up</button>
           </div>
         </form>
         <Helmet>
@@ -64,4 +62,17 @@ class Registration extends React.Component {
   }
 }
 
-export default Registration;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signUp: (creds) => dispatch(signUp(creds))
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    authError: state.auth.authError,
+    auth: state.firebase.auth
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Registration)

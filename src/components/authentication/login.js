@@ -22,11 +22,11 @@ class Login extends React.Component {
   }
 
   render() {
+    const {authError} = this.props;
     const {auth} = this.props;
     // if user is signed in - redirect to home page
     if (auth.uid) return <Redirect to="/" />
 
-    const {authError} = this.props;
     return (
       // Login page
       <div className="container">
