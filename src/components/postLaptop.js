@@ -1,4 +1,4 @@
-import React , {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux'
 import {postLaptop} from '../store/actions/laptopActions';
 

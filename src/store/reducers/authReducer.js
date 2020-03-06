@@ -33,7 +33,9 @@ const authReducer = (state = initState, action) => {
         console.log('signup error');
         return {
             ...state, 
-            authError: 'Sign Up Failed'
+            // set auth error to the error supplied from the catch
+            // method in authActions
+            authError: action.error.message
         }
     }
     else {

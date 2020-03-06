@@ -12,7 +12,6 @@ class Registration extends React.Component {
     password:''
   }
 
-
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.signUp(this.state);
@@ -52,6 +51,10 @@ class Registration extends React.Component {
           </div>
           <div>
             <button className="btn blue lighten-1 z-depth-0" type="submit">Sign Up</button>
+            <div className="red-text">
+              {/* if authentication error exists - display authentication error */}
+              {authError ? <p>{authError}</p> : null}
+            </div>
           </div>
         </form>
         <Helmet>
