@@ -8,11 +8,11 @@ class PostLaptop extends React.Component {
       brandname:'',
       condition:'',
       memory:'',
-      price:200,
-      processor:'Intel Core i5',
-      prodID:9898,
-      ram:8,
-      screensize:14
+      price: null,
+      processor:'',
+      prodID: null,
+      ram: null,
+      screensize: null
   }    
   
   handleChange = (e) => {
@@ -38,6 +38,26 @@ class PostLaptop extends React.Component {
           <div className="input-field">
             <label htmlFor="memory">Memory</label>
             <input onChange={this.handleChange} value={this.state.memory} type="text" id="memory"></input>
+          </div>
+
+          <div className="input-field">
+            <label htmlFor="processor">Processor</label>
+            <input onChange={this.handleChange} value={this.state.processor} type="text" id="processor"></input>
+          </div>
+
+          <div className="input-field">
+            <label htmlFor="ram">RAM</label>
+            <input onChange={this.handleChange} value={this.state.ram} type="number" id="ram"></input>
+          </div>
+
+          <div className="input-field">
+            <label htmlFor="ram">Screensize</label>
+            <input onChange={this.handleChange} value={this.state.screensize} type="number" id="screensize"></input>
+          </div>
+
+          <div className="input-field">
+            <label htmlFor="price">Price</label>
+            <input onChange={this.handleChange} value={this.state.price} type="number" id="price"></input>
           </div>
 
           <div className="input-field">

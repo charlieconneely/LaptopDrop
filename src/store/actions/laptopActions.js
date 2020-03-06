@@ -5,15 +5,7 @@ export const postLaptop = (laptop) => {
     return (dispatch, getState, {getFirbase, getFirestore}) => {
         const firestore = getFirestore();
         firestore.collection('Laptops').add({
-            ...laptop,
-            brandname: "Dell",
-            condition: "Used",
-            memory: "1 TB HDD",
-            price: 800,
-            processor: "Intel Core i7",
-            prodID :3004,
-            ram: 8,
-            screensize: 12
+            ...laptop
         }).then( () => {
             dispatch({type: 'POST_LAPTOP', laptop});  
         }).catch( (error) => {

@@ -1,15 +1,6 @@
 
 const initState = {
-    laptops: [
-        {brandname: "HP",
-        condition: "New",
-        memory: "1 TB HDD",
-        price: 400,
-        processor: "Intel Core i3",
-        prodID :4004,
-        ram: 4,
-        screensize: 12}
-    ]
+    
 }
 
 const laptopReducer = (state = initState, action) => {

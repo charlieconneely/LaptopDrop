@@ -12,6 +12,7 @@ const LaptopCard = ({laptop}) => {
                 Storage: {laptop.memory} <br/>
                 Resolution: {laptop.screensize} <br/>
                 RAM: {laptop.ram} GB <br/>
+                Processor: {laptop.processor} <br/>
 
                 <footer className="blockquote-footer">
                     Condition: {laptop.condition}
