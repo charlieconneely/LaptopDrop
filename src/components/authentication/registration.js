@@ -23,7 +23,7 @@ class Registration extends React.Component {
 
   render() {
     const {auth} = this.props;
-    const {authError} = this.props; // unused
+    const {authError} = this.props; 
     // if user is signed in - redirect to home page
     if (auth.uid) return <Redirect to="/"/>
 

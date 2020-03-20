@@ -13,6 +13,7 @@ const authReducer = (state = initState, action) => {
     }
     else if (action.type === 'LOGIN_SUCCESS') {
         console.log('login success');
+        console.log(state);
         return {
             ...state,
             authError: null

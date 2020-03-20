@@ -4,6 +4,7 @@
 export const postLaptop = (laptop) => {
     return (dispatch, getState, {getFirbase, getFirestore}) => {
         const firestore = getFirestore();
+        //const id = getState
         firestore.collection('Laptops').add({
             ...laptop
         }).then( () => {
