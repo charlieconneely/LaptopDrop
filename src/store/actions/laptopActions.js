@@ -15,3 +15,9 @@ export const postLaptop = (laptop) => {
                  
     }
 }
+
+export const addLaptopToBasket = (laptop) => {
+    return(dispatch) => {
+        dispatch({type: 'ADD_TO_BASKET', laptop});
+    }
+}

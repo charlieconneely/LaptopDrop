@@ -20,7 +20,7 @@ const LaptopCard = ({laptop}) => {
                     </footer>
                 </blockquote>
             </Card.Body>
-            <Card.Footer><button>Add to Basket</button></Card.Footer>
+            <Card.Footer><button type="submit">Add to Basket</button></Card.Footer> 
         </Card>
     )
 }
