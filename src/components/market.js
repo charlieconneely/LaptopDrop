@@ -11,34 +11,39 @@ import { addLaptopToBasket } from '../store/actions/laptopActions';
 
 class Market extends Component {
 
-  state = {
-    brandname:'',
-    condition:'',
-    memory:'',
-    price: null,
-    processor:'',
-    prodID: null,
-    ram: null,
-    screensize: null
+  constructor(props) {
+    super(props);
+    this.replaceStateWithLaptop = this.replaceStateWithLaptop.bind(this);
+    // id is only necessary field - consider removing the rest 
+    this.state = {
+      brandname:'',
+      condition:'',
+      memory:'',
+      price: null,
+      processor:'',
+      ram: null,
+      screensize: null,
+      id: null,
+      basketID: null
+    }
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  replaceStateWithLaptop = (id, uid) => {
+    console.log("id selected: " + id);
+    console.log("uid: " + uid);
+    // set state id to document id sent from button 
+    this.state.id = id;
+    this.state.basketID = uid;
+    // call redux function 
     this.props.addLaptopToBasket(this.state);
-  }
+  } 
   
   render() {
     const {laptops} = this.props;
+    const {auth} = this.props;
 
     const LaptopCard = ({laptop}) => {
-      {this.state.brandname = laptop.brandname}
-      {this.state.prodID = laptop.prodID}
-      {this.state.price = laptop.price}
-      {this.state.memory = laptop.memory}
-      {this.state.screensize = laptop.screensize}
-      {this.state.ram = laptop.ram}
-      {this.state.processor = laptop.processor}
-      {this.state.condition = laptop.condition}
+
       return (
         <div className="container">
           <Card style={{textAlign: "center"}}>
@@ -58,8 +63,9 @@ class Market extends Component {
                   </blockquote>
               </Card.Body>
               <Card.Footer>
-                <button className="btn blue lighten-1 z-depth-0" onClick={this.handleSubmit}>Add to Cart</button>
-              </Card.Footer>  
+                <button className="btn blue lighten-1 z-depth-0" 
+                        onClick={this.replaceStateWithLaptop.bind(this,laptop.id, auth.uid)}>Add to Cart</button>   
+              </Card.Footer> 
           </Card>
           </div>
       )
@@ -71,7 +77,7 @@ class Market extends Component {
               {laptops && laptops.map(laptop => {              
                   return (
                     <div className="container">
-                      <LaptopCard laptop={laptop} key={laptop.prodID}/>
+                      <LaptopCard laptop={laptop} key={laptop.id}/>
                     </div>
                   )
               })}
@@ -100,7 +106,8 @@ const mapStateToProps = (state) => {
   console.log(state);
   return {
     // map laptops const to Laptops collection in firestore
-    laptops: state.firestore.ordered.Laptops
+    laptops: state.firestore.ordered.Laptops,
+    auth: state.firebase.auth
   }
 }
 

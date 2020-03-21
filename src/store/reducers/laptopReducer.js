@@ -19,7 +19,7 @@ const laptopReducer = (state = initState, action) => {
     }
     else if (action.type === 'ADD_TO_BASKET') {
         //basketState.add({...action.laptop});
-        basketState.push(action.laptop);
+        // basketState.push(action.laptop);
         console.log('add to cart clicked', action.laptop);
         console.log(action);
         return state;
