@@ -12,8 +12,14 @@ class PostLaptop extends React.Component {
       processor:'',
       prodID: null,
       ram: null,
-      screensize: null
+      screensize: null,
+      uid: null
   }    
+
+  // UserID = (props) => {
+  //   const {auth} = props;
+  //   this.state.uid = auth.uid;
+  // }
   
   handleChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });
@@ -25,6 +31,9 @@ class PostLaptop extends React.Component {
   }
 
   render() {
+    const {auth} = this.props;
+    // set uid in firestore db to acitve uid 
+    {this.state.uid = auth.uid}
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit} className="white">
@@ -83,4 +92,11 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(PostLaptop);
+const mapStateToProps = (state) => {
+    return {
+        // access authentication status 
+        auth: state.firebase.auth
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostLaptop);
