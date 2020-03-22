@@ -31,7 +31,7 @@ class Market extends Component {
   replaceStateWithLaptop = (id, uid) => {
     console.log("id selected: " + id);
     console.log("uid: " + uid);
-    // set state id to document id sent from button 
+    // set state id and basketID to values sent from button click
     this.state.id = id;
     this.state.basketID = uid;
     // call redux function 
@@ -43,6 +43,16 @@ class Market extends Component {
     const {auth} = this.props;
 
     const LaptopCard = ({laptop}) => {
+
+      let button;
+      // check if laptop item is already in the basket of the user
+      // - display the appropriate button
+      if (auth.uid != laptop.basketID) {
+        button = <button className="btn blue lighten-1 z-depth-0" 
+        onClick={this.replaceStateWithLaptop.bind(this,laptop.id, auth.uid)}>Add to Cart</button>
+      } else {
+        button = <button className="btn green lighten-1 z-depth-0">Added to Cart</button>
+      }
 
       return (
         <div className="container">
@@ -63,8 +73,7 @@ class Market extends Component {
                   </blockquote>
               </Card.Body>
               <Card.Footer>
-                <button className="btn blue lighten-1 z-depth-0" 
-                        onClick={this.replaceStateWithLaptop.bind(this,laptop.id, auth.uid)}>Add to Cart</button>   
+                  {button}
               </Card.Footer> 
           </Card>
           </div>

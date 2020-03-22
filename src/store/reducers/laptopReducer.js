@@ -4,7 +4,7 @@ const initState = {
     
 }
 
-const basketState = [];
+// const basketState = [];
 
 const laptopReducer = (state = initState, action) => {
     if (action.type === 'POST_LAPTOP') {
@@ -18,8 +18,6 @@ const laptopReducer = (state = initState, action) => {
         return state;
     }
     else if (action.type === 'ADD_TO_BASKET') {
-        //basketState.add({...action.laptop});
-        // basketState.push(action.laptop);
         console.log('add to cart clicked', action.laptop);
         console.log(action);
         return state;

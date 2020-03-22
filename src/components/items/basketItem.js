@@ -7,7 +7,7 @@ const BasketItem = ({laptops}) => {
         <div>    
             {laptops && laptops.map(laptop => {              
                 return (
-                    <BasketCard laptop={laptop} key={laptop.prodID} /> 
+                    <BasketCard laptop={laptop} key={laptop.id} /> 
                 )
             })}
         </div>
