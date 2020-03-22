@@ -28,3 +28,17 @@ export const addLaptopToBasket = (laptop) => {
         })               
     }
 }
+
+export const removeLaptopFromBasket = (laptop) => {
+    return (dispatch, getState, {getFirbase, getFirestore}) => {
+        const firestore = getFirestore();
+        console.log(laptop.id);
+        firestore.collection('Laptops').doc(laptop.id).update({
+            basketID: null
+        }).then( () => {    
+            dispatch({type: 'REMOVE_FROM_BASKET', laptop});  
+        }).catch( (error) => {
+            dispatch({type: 'REMOVE_FROM_BASKET_ERROR', error});  
+        })               
+    }
+}

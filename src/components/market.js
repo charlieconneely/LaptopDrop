@@ -6,14 +6,15 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Card from 'react-bootstrap/Card';
-import { addLaptopToBasket } from '../store/actions/laptopActions';
+import { addLaptopToBasket, removeLaptopFromBasket } from '../store/actions/laptopActions';
 
 
 class Market extends Component {
 
   constructor(props) {
     super(props);
-    this.replaceStateWithLaptop = this.replaceStateWithLaptop.bind(this);
+    this.addToBasket = this.addToBasket.bind(this);
+    this.removeFromBasket = this.removeFromBasket.bind(this);
     // id is only necessary field - consider removing the rest 
     this.state = {
       brandname:'',
@@ -28,7 +29,7 @@ class Market extends Component {
     }
   }
 
-  replaceStateWithLaptop = (id, uid) => {
+  addToBasket = (id, uid) => {
     console.log("id selected: " + id);
     console.log("uid: " + uid);
     // set state id and basketID to values sent from button click
@@ -36,6 +37,16 @@ class Market extends Component {
     this.state.basketID = uid;
     // call redux function 
     this.props.addLaptopToBasket(this.state);
+  } 
+
+  removeFromBasket = (id, uid) => {
+    console.log("id selected: " + id);
+    console.log("uid: " + uid);
+    // set state id and basketID values
+    this.state.id = id;
+    this.state.basketID = null;
+    // call redux function 
+    this.props.removeLaptopFromBasket(this.state);
   } 
   
   render() {
@@ -47,11 +58,12 @@ class Market extends Component {
       let button;
       // check if laptop item is already in the basket of the user
       // - display the appropriate button
-      if (auth.uid != laptop.basketID) {
+      if (auth.uid !== laptop.basketID) {
         button = <button className="btn blue lighten-1 z-depth-0" 
-        onClick={this.replaceStateWithLaptop.bind(this,laptop.id, auth.uid)}>Add to Cart</button>
+        onClick={this.addToBasket.bind(this,laptop.id, auth.uid)}>Add to Cart</button>
       } else {
-        button = <button className="btn green lighten-1 z-depth-0">Added to Cart</button>
+        button = <button className="btn red lighten-1 z-depth-0"
+        onClick={this.removeFromBasket.bind(this, laptop.id, auth.uid)}>Remove</button>
       }
 
       return (
@@ -85,9 +97,10 @@ class Market extends Component {
           <div>    
               {laptops && laptops.map(laptop => {              
                   return (
+                    auth.uid === laptop.basketID || laptop.basketID === null ?
                     <div className="container">
-                      <LaptopCard laptop={laptop} key={laptop.id}/>
-                    </div>
+                       <LaptopCard laptop={laptop} key={laptop.id}/>
+                    </div> : null
                   )
               })}
           </div>
@@ -107,7 +120,8 @@ class Market extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addLaptopToBasket: (laptop) => dispatch(addLaptopToBasket(laptop))
+    addLaptopToBasket: (laptop) => dispatch(addLaptopToBasket(laptop)),
+    removeLaptopFromBasket: (laptop) => dispatch(removeLaptopFromBasket(laptop))
   }
 }
 

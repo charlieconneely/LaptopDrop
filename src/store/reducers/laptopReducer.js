@@ -22,6 +22,19 @@ const laptopReducer = (state = initState, action) => {
         console.log(action);
         return state;
     }
+    else if (action.type === 'ADD_TO_BASKET_ERROR') {
+        console.log('add to cart error', action.error);
+        return state;
+    }
+    else if (action.type === 'REMOVE_FROM_BASKET') {
+        console.log('remove from cart clicked', action.laptop);
+        console.log(action);
+        return state;
+    }
+    else if (action.type === 'REMOVE_FROM_BASKET_ERROR') {
+        console.log('remove from cart clicked', action.error);
+        return state;
+    }
     else {
         return state;
     }
