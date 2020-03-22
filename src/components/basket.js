@@ -5,41 +5,54 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Card from 'react-bootstrap/Card';
-import { removeLaptopFromBasket } from '../store/actions/laptopActions'
+import { removeLaptopFromBasket, initialiseTotal } from '../store/actions/laptopActions'
 
 class Basket extends Component {
   
   constructor(props) {
     super(props);
     this.removeFromBasket = this.removeFromBasket.bind(this);
-    // id is only necessary field - consider removing the rest 
+    this.initialiseTotal = this.initialiseTotal.bind(this);
+    // id and price are only necessary fields - consider removing the rest 
     this.state = {
       brandname:'',
       condition:'',
       memory:'',
-      price: null,
+      price: 0,
       processor:'',
       ram: null,
       screensize: null,
       id: null,
-      basketID: null
+      basketID: null,
+      initTotal: 0,
+      isInitialized: false
     }
   }
 
-  removeFromBasket = (id, uid) => {
+  removeFromBasket = (id, price, uid) => {
     console.log("id selected: " + id);
     console.log("uid: " + uid);
     // set state id and basketID values
     this.state.id = id;
+    this.state.price = price;
     // call redux function 
     this.props.removeLaptopFromBasket(this.state);
+  }
+
+  initialiseTotal = (total) => {
+    // initialise the totalprice in the state with the price of all items in the basket 
+    this.props.initialiseTotal(total);
   }
 
   render() {
       const {laptops} = this.props;
       const {auth} = this.props;
+      const {total} = this.props;
+      var checkedItems = [];
 
       const BasketCard = ({laptop}) => {
+        console.log("price: " + laptop.price);
+        // console.log("totalPrice: " + this.totalPrice);
         return (
         <Card style={{textAlign: "center"}}>
             <Card.Header>{laptop.brandname}</Card.Header>
@@ -58,8 +71,7 @@ class Basket extends Component {
             </Card.Body>
             <Card.Footer>
             <button className="btn red lighten-1 z-depth-0"
-              onClick={this.removeFromBasket.bind(this, laptop.id, auth.uid)}>Remove</button>
-              <button className="btn blue lighten-1 z-depth-0">Checkout</button>
+              onClick={this.removeFromBasket.bind(this, laptop.id, laptop.price, auth.uid)}>Remove</button>
             </Card.Footer> 
         </Card>
         )
@@ -69,14 +81,21 @@ class Basket extends Component {
 
         return (
             <div>    
-                {laptops && laptops.map(laptop => {              
+                {laptops && laptops.map(laptop => {      
+                    if (laptop.basketID === auth.uid && this.state.isInitialized === false) {                     
+                      this.state.initTotal += laptop.price;
+                      console.log("total: " + this.state.initTotal);
+                      this.initialiseTotal(this.state.initTotal);
+                    }        
                     return (
+                        /* filter through items for basketID(s) that match active UID  */
                         auth.uid === laptop.basketID ? 
                         <div className="container">
                           <BasketCard laptop={laptop} key={laptop.id} /> 
                         </div> : null
                     )
                 })}
+                {this.state.isInitialized = true}
             </div>
         )         
     }
@@ -84,8 +103,9 @@ class Basket extends Component {
       return (   
         <div className="container">    
           <div className="row">         
-          {/* need to filter through items for basketID(s) that match active UID  */}
             <BasketItem laptops={laptops}/>                 
+            <h5>Total price: {total.totalPrice}</h5>
+            <button className="btn blue lighten-1 z-depth-0">Checkout</button>
           </div>     
         </div>
       ); 
@@ -97,13 +117,15 @@ const mapStateToProps = (state) => {
   return {
     // map laptops const to Laptops collection in firestore
     laptops: state.firestore.ordered.Laptops,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    total: state.laptop
   } 
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    removeLaptopFromBasket: (laptop) => dispatch(removeLaptopFromBasket(laptop))
+    removeLaptopFromBasket: (laptop) => dispatch(removeLaptopFromBasket(laptop)),
+    initialiseTotal: (total) => dispatch(initialiseTotal(total))
   }
 }
 

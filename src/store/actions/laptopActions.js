@@ -42,3 +42,9 @@ export const removeLaptopFromBasket = (laptop) => {
         })               
     }
 }
+
+export const initialiseTotal = (total) => {
+    return (dispatch) => {
+        dispatch({type: 'INITIALISE_TOTAL', total});
+    } 
+}

@@ -8,18 +8,13 @@ class PostLaptop extends React.Component {
       brandname:'',
       condition:'',
       memory:'',
-      price: null,
+      price: 0,
       processor:'',
-      prodID: null,
       ram: null,
       screensize: null,
-      uid: null
+      uid: null,
+      basketID: null
   }    
-
-  // UserID = (props) => {
-  //   const {auth} = props;
-  //   this.state.uid = auth.uid;
-  // }
   
   handleChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });

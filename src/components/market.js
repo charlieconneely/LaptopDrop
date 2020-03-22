@@ -20,7 +20,7 @@ class Market extends Component {
       brandname:'',
       condition:'',
       memory:'',
-      price: null,
+      price: 0,
       processor:'',
       ram: null,
       screensize: null,
@@ -29,21 +29,23 @@ class Market extends Component {
     }
   }
 
-  addToBasket = (id, uid) => {
+  addToBasket = (id, price, uid) => {
     console.log("id selected: " + id);
     console.log("uid: " + uid);
     // set state id and basketID to values sent from button click
     this.state.id = id;
+    this.state.price = price;
     this.state.basketID = uid;
     // call redux function 
     this.props.addLaptopToBasket(this.state);
   } 
 
-  removeFromBasket = (id, uid) => {
+  removeFromBasket = (id, price, uid) => {
     console.log("id selected: " + id);
     console.log("uid: " + uid);
     // set state id and basketID values
     this.state.id = id;
+    this.state.price = price;
     this.state.basketID = null;
     // call redux function 
     this.props.removeLaptopFromBasket(this.state);
@@ -60,10 +62,10 @@ class Market extends Component {
       // - display the appropriate button
       if (auth.uid !== laptop.basketID) {
         button = <button className="btn blue lighten-1 z-depth-0" 
-        onClick={this.addToBasket.bind(this,laptop.id, auth.uid)}>Add to Cart</button>
+        onClick={this.addToBasket.bind(this,laptop.id, laptop.price, auth.uid)}>Add to Cart</button>
       } else {
         button = <button className="btn red lighten-1 z-depth-0"
-        onClick={this.removeFromBasket.bind(this, laptop.id, auth.uid)}>Remove</button>
+        onClick={this.removeFromBasket.bind(this, laptop.id, laptop.price, auth.uid)}>Remove</button>
       }
 
       return (
