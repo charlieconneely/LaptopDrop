@@ -8,7 +8,7 @@ class PostLaptop extends React.Component {
       brandname:'',
       condition:'',
       memory:'',
-      price: 0,
+      price: null,
       processor:'',
       ram: null,
       screensize: null,
@@ -68,6 +68,9 @@ class PostLaptop extends React.Component {
             <label htmlFor="condition">Condition</label>
             <input onChange={this.handleChange} value={this.state.condition} type="text" id="condition"></input>
           </div>
+
+          {/* need to upload image to firebase storage
+          possible solution - https://www.youtube.com/watch?v=7UF7x5yLh44 */}
             
           <div>
             <button className="btn blue lighten-1 z-depth-0" type="submit">Post</button>

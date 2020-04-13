@@ -121,7 +121,7 @@ const mapStateToProps = (state) => {
     total: state.laptop
   } 
 }
-
+  
 const mapDispatchToProps = (dispatch) => {
   return {
     removeLaptopFromBasket: (laptop) => dispatch(removeLaptopFromBasket(laptop)),
