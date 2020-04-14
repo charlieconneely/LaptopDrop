@@ -1,9 +1,8 @@
 import React from 'react';
 import './App.css';
 import Login from './components/authentication/login';
-import Home from './components/home';
+import Home from './components/Home/home';
 import Market from './components/market';
-import Market2 from './components/market2';
 import Registration from './components/authentication/registration';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/layout/navbar';
