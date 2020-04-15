@@ -15,6 +15,7 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom'
 class App extends React.Component {
   render() {
     return (
+    
       <div className="page-container">
         <div className="content-wrap">
           <BrowserRouter>
@@ -35,9 +36,9 @@ class App extends React.Component {
           </BrowserRouter>
 
         </div>
-        <Footer/>
+        <Footer />
       </div>
-   
+    
     );
   }
 }
