@@ -1,9 +1,20 @@
-.App {
+
+.items {
   text-align: center;
-  background-color: #00ffff;
+  background-color: #DAD9D8;
   height: 100%;
   width: 100%;
-  font-size: 20px;
+  font-size: 25px;
+} 
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-wrap {
+  flex: 1;
 }
 
 nav {
@@ -11,9 +22,27 @@ nav {
   justify-content: space-around;
   align-items: center;
   min-height: 8vh;
-  background-color: #00ffff;
+  background-color: #DAD9D8;
   font-family: 'Times New Roman', Times, serif;   
-  font-size: 30px;  
+  font-size: 80px;  
+}
+
+li {
+  display: flex;   
+  display: inline-block;
+  letter-spacing: 3px;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.button{
+  text-align: center;
+  font-size: 15px;
+  padding: 6px 6px 6px 6px;
+  border-top: 2px solid white;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+  border-left: 2px solid white;
 }
 
 .App-logo {
