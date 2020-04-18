@@ -140,7 +140,4 @@ const mapStateToProps = (state) => {
 // compose impelemented to connect both state and firestore db to Market 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect([
-    {collection: 'Laptops'}
-  ])
-)(Market);
+  firestoreConnect([{collection: 'Laptops'}]))(Market);
