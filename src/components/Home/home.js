@@ -25,12 +25,9 @@ class Home extends React.Component {
       
             {button}
           </Jumbotron>
-          <Row className="show-grid text-center"></Row>
-          {/* Implement carousel */}
-          
+          <Row className="show-grid text-center"></Row>        
         </Container>
-      </div>
-      
+      </div>     
     );
   }
 }

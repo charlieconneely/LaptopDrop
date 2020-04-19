@@ -1,16 +1,12 @@
-import { act } from "react-dom/test-utils";
 
 const initState = {
     totalPrice: 0
 }
 
-// const basketState = [];
-
 const laptopReducer = (state = initState, action) => {
     if (action.type === 'POST_LAPTOP') {
         console.log('posted laptop', action.laptop);
         console.log(state);
-        console.log("after state posted");
         return state;
     }
     else if (action.type === 'POST_LAPTOP_ERROR') {
@@ -22,9 +18,10 @@ const laptopReducer = (state = initState, action) => {
         console.log(action.laptop.price);
         console.log("state: ");
         console.log(state);
+        var activePrice = parseFloat(action.laptop.price);
         return {
             ...state,
-            totalPrice: state.totalPrice + action.laptop.price
+            totalPrice: state.totalPrice + activePrice
         }   
     }
     else if (action.type === 'ADD_TO_BASKET_ERROR') {

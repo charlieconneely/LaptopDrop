@@ -37,7 +37,7 @@ class Basket extends Component {
     this.state.price = price;
     // call redux function 
     this.props.removeLaptopFromBasket(this.state);
-  }
+  } 
 
   initialiseTotal = (total) => {
     // initialise the totalprice in the state with the price of all items in the basket 
@@ -82,8 +82,9 @@ class Basket extends Component {
         return (
             <div>    
                 {laptops && laptops.map(laptop => {      
-                    if (laptop.basketID === auth.uid && this.state.isInitialized === false) {                     
-                      this.state.initTotal += laptop.price;
+                    if (laptop.basketID === auth.uid && this.state.isInitialized === false) {              
+                      var activePrice = parseFloat(laptop.price);       
+                      this.state.initTotal += activePrice;
                       console.log("total: " + this.state.initTotal);
                       this.initialiseTotal(this.state.initTotal);
                     }        

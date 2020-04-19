@@ -2,8 +2,10 @@
 
 // need to remove raw data and replace with user input
 export const postLaptop = (laptop) => {
-    return (dispatch, getState, {getFirbase, getFirestore}) => {
+
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
+
         firestore.collection('Laptops').add({
             ...laptop  
         }).then( () => {
@@ -15,8 +17,17 @@ export const postLaptop = (laptop) => {
     }
 }
 
+export const uploadImage = (image) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firebase = getFirebase();
+         // need to find a unique ID instead of using the time
+        var storageRef = firebase.storage().ref(`laptopImgs/${new Date().getTime()}`);
+        storageRef.put(image);
+    }
+}
+
 export const addLaptopToBasket = (laptop) => {
-    return (dispatch, getState, {getFirbase, getFirestore}) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
         console.log(laptop.id);
         firestore.collection('Laptops').doc(laptop.id).update({
@@ -30,7 +41,7 @@ export const addLaptopToBasket = (laptop) => {
 }
 
 export const removeLaptopFromBasket = (laptop) => {
-    return (dispatch, getState, {getFirbase, getFirestore}) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
         console.log(laptop.id);
         firestore.collection('Laptops').doc(laptop.id).update({
