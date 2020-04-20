@@ -13,8 +13,8 @@ class Home extends React.Component {
 
   render() {
     const {auth} = this.props;
-    const button = auth.uid ? <Link to="/market"><Button bsStyle="primary">BROWSE</Button></Link> : 
-          <Link to="/login"><Button bsStyle="primary">GET STARTED</Button></Link>
+    const button = auth.uid ? <Link to="/market"><Button>BROWSE</Button></Link> : 
+          <Link to="/login"><Button>GET STARTED</Button></Link>
     return (
       // Home page
       <div>      

@@ -22,11 +22,11 @@ export const uploadImage = (laptop) => {
         var storageRef = firebase.storage().ref(`laptopImgs/${new Date().getTime()}`);
         storageRef.put(laptop.image).then( (snapshot) => {
             dispatch({type: 'UPLOAD_IMAGE', snapshot});
-            laptop.image = snapshot.metadata.name;
+            laptop.image = snapshot.metadata.name; // set the value of image to the name of the file on storage to avoid error in postLaptop
             const images = firebase.storage().ref().child('laptopImgs');
             const image = images.child(snapshot.metadata.name); 
-            image.getDownloadURL().then((url) => { laptop.imageURL = url });
-            dispatch(postLaptop(laptop));  
+            image.getDownloadURL().then((url) => { laptop.imageURL = url }); // get URL of image on storage and set as value for imageURL
+            dispatch(postLaptop(laptop));  // pass the laptop with these new values to the postLaptop method
         }).catch( (error) => {
             dispatch({type: 'UPLOAD_IMAGE_ERROR', error});  
         })

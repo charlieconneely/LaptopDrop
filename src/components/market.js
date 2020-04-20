@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import Card from 'react-bootstrap/Card';
 import { Row, Col, Container } from 'react-bootstrap';
 import PreviewPicture from './previewPicture';
 import { addLaptopToBasket, removeLaptopFromBasket } from '../store/actions/laptopActions';
@@ -75,7 +74,9 @@ class Market extends Component {
         <div className="laptopDetails">
           <Container >
             <Row>
-              <Col style={{textAlign:'right'}}><PreviewPicture imageURL={laptop.imageURL}/></Col>
+              <Col style={{textAlign:'right'}}>
+                <PreviewPicture imageURL={laptop.imageURL}/>
+              </Col>
               <Col>
                 <header>{laptop.brandname}</header>
                   

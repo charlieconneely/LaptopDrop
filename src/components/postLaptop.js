@@ -31,10 +31,9 @@ class PostLaptop extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    // postLaptop will be called from uploadImage after async action
+    // is complete
     this.props.uploadImage(this.state);
-    //this.state.image = 'just text';
-    //this.state.imageURL = 'just text';
-   // this.props.postLaptop(this.state);
   }
 
   displayPicture(event) {

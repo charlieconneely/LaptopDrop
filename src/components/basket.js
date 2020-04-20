@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import '../App.css';
-//import BasketItem from './items/basketItem';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import Card from 'react-bootstrap/Card';
-import { removeLaptopFromBasket, initialiseTotal } from '../store/actions/laptopActions'
+import { removeLaptopFromBasket, initialiseTotal } from '../store/actions/laptopActions';
+import { Row, Col, Container } from 'react-bootstrap';
+import PreviewPicture from './previewPicture';
+import '../App.css';
 
 class Basket extends Component {
   
@@ -48,32 +48,38 @@ class Basket extends Component {
       const {laptops} = this.props;
       const {auth} = this.props;
       const {total} = this.props;
-      var checkedItems = [];
 
       const BasketCard = ({laptop}) => {
         console.log("price: " + laptop.price);
         // TODO - re-style basket similar to that of market.js 
         return (
-        <Card style={{textAlign: "center"}}>
-            <Card.Header>{laptop.brandname}</Card.Header>
-            <Card.Body>
-                <blockquote className="blockquote mb-0">
-                    Cost: €{laptop.price}<br/>
-                    Storage: {laptop.memory} <br/>
-                    Resolution: {laptop.screensize} <br/>
-                    RAM: {laptop.ram} GB <br/>
-                    Processor: {laptop.processor} <br/>
-    
-                    <footer className="blockquote-footer">
-                        Condition: {laptop.condition}
-                    </footer>
-                </blockquote>
-            </Card.Body>
-            <Card.Footer>
-            <button className="btn red lighten-1 z-depth-0"
-              onClick={this.removeFromBasket.bind(this, laptop.id, laptop.price, auth.uid)}>Remove</button>
-            </Card.Footer> 
-        </Card>
+          <div className="laptopDetails">
+            <Container >
+              <Row>
+                <Col style={{textAlign:'right'}}>
+                  <PreviewPicture imageURL={laptop.imageURL}/>
+                </Col>
+                <Col>
+                  <header>{laptop.brandname}</header>
+                    
+                  Cost: €{laptop.price}<br/> 
+                  Storage: {laptop.memory} <br/>
+                  Resolution: {laptop.screensize} <br/> 
+                  RAM: {laptop.ram} GB <br/> 
+                  Processor: {laptop.processor} <br/>  
+                  <br/>
+                  <footer className="blockquote-footer">
+                      Condition: {laptop.condition} 
+                  </footer>
+                </Col>     
+              </Row>
+              <Row style={{justifyContent:'center', fontStyle:'normal'}}>
+                <button className="btn red lighten-1 z-depth-0"
+                onClick={this.removeFromBasket.bind(this, laptop.id, laptop.price, auth.uid)}>Remove</button>
+              </Row>
+              <hr />
+            </Container>
+          </div>
         )
     }      
 

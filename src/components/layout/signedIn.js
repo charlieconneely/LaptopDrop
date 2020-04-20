@@ -9,7 +9,6 @@ const SingedInLinks = (props) => {
         <ul className="right">
             <li ><NavLink to='/postLaptop'>Sell Item</NavLink></li>
             <li><NavLink to='/market'>Market</NavLink></li>
-            <li><NavLink to='/market2'>PC Market</NavLink></li>
             <li><NavLink to='/basket'>Basket</NavLink></li>
             <li><a onClick={props.signOut} href='/'>Log Out</a></li>
         </ul>   
