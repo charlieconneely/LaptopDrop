@@ -1,3 +1,11 @@
+.laptopDetails {
+  justify-content: center;
+  display: flex;
+  align-items: right;
+  text-align: left;
+  font-size: large;
+  font-style: oblique;
+}
 
 .items {
   text-align: center;

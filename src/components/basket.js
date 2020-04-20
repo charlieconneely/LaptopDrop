@@ -52,7 +52,7 @@ class Basket extends Component {
 
       const BasketCard = ({laptop}) => {
         console.log("price: " + laptop.price);
-        // console.log("totalPrice: " + this.totalPrice);
+        // TODO - re-style basket similar to that of market.js 
         return (
         <Card style={{textAlign: "center"}}>
             <Card.Header>{laptop.brandname}</Card.Header>
