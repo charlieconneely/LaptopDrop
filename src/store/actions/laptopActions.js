@@ -5,7 +5,6 @@ export const postLaptop = (laptop) => {
 
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
-
         firestore.collection('Laptops').add({
             ...laptop  
         }).then( () => {
@@ -13,16 +12,24 @@ export const postLaptop = (laptop) => {
         }).catch( (error) => {
             dispatch({type: 'POST_LAPTOP_ERROR', error});  
         })
-                 
     }
 }
 
-export const uploadImage = (image) => {
+export const uploadImage = (laptop) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firebase = getFirebase();
          // need to find a unique ID instead of using the time
         var storageRef = firebase.storage().ref(`laptopImgs/${new Date().getTime()}`);
-        storageRef.put(image);
+        storageRef.put(laptop.image).then( (snapshot) => {
+            dispatch({type: 'UPLOAD_IMAGE', snapshot});
+            laptop.image = snapshot.metadata.name;
+            const images = firebase.storage().ref().child('laptopImgs');
+            const image = images.child(snapshot.metadata.name); 
+            image.getDownloadURL().then((url) => { laptop.imageURL = url });
+            dispatch(postLaptop(laptop));  
+        }).catch( (error) => {
+            dispatch({type: 'UPLOAD_IMAGE_ERROR', error});  
+        })
     }
 }
 

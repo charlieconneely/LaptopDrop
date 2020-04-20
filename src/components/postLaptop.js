@@ -31,10 +31,10 @@ class PostLaptop extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.uploadImage(this.state.image);
-    this.state.image = 'just text';
-    this.state.imageURL = 'just text';
-    this.props.postLaptop(this.state);
+    this.props.uploadImage(this.state);
+    //this.state.image = 'just text';
+    //this.state.imageURL = 'just text';
+   // this.props.postLaptop(this.state);
   }
 
   displayPicture(event) {
@@ -123,15 +123,17 @@ const mapDispatchToProps = (dispatch) => {
     return {
         // calls dipatch to postLaptop method in laptopActions.js
         // providing laptop from current state 
-        uploadImage: (image) => dispatch(uploadImage(image)),
+        uploadImage: (laptop) => dispatch(uploadImage(laptop)),
         postLaptop: (laptop) => dispatch(postLaptop(laptop)) 
     }
 }
 
 const mapStateToProps = (state) => {
+    console.log(state);
     return {
         // access authentication status 
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        imageName: state.laptop.imagePath
     }
 }
 

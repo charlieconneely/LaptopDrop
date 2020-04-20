@@ -1,6 +1,7 @@
 
 const initState = {
-    totalPrice: 0
+    totalPrice: 0,
+    imageName: ''
 }
 
 const laptopReducer = (state = initState, action) => {
@@ -11,6 +12,18 @@ const laptopReducer = (state = initState, action) => {
     }
     else if (action.type === 'POST_LAPTOP_ERROR') {
         console.log('post laptop error', action.error);
+        return state;
+    }
+    else if (action.type === 'UPLOAD_IMAGE') {
+        console.log('uploaded image to firebase storage');
+        console.log(action.snapshot.metadata);
+        return {
+            ...state,
+            imageName: action.snapshot.metadata.name
+        };
+    }   
+    else if (action.type === 'UPLOAD_IMAGE_ERROR') {
+        console.log('error uploading image', action.error);
         return state;
     }
     else if (action.type === 'ADD_TO_BASKET') {

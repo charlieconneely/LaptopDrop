@@ -6,6 +6,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Card from 'react-bootstrap/Card';
+import PreviewPicture from './previewPicture';
 import { addLaptopToBasket, removeLaptopFromBasket } from '../store/actions/laptopActions';
 
 
@@ -25,7 +26,8 @@ class Market extends Component {
       ram: null,
       screensize: null,
       id: null,
-      basketID: null
+      basketID: null,
+      imageURL: ''
     }
   }
 
@@ -79,7 +81,9 @@ class Market extends Component {
                       Storage: {laptop.memory} <br/>
                       Resolution: {laptop.screensize} <br/> 
                       RAM: {laptop.ram} GB <br/> 
-                      Processor: {laptop.processor} <br/> 
+                      Processor: {laptop.processor} <br/>
+
+                      <PreviewPicture imageURL={laptop.imageURL}/>  
   
                       <footer className="blockquote-footer">
                           Condition: {laptop.condition} 
