@@ -67,6 +67,17 @@ const laptopReducer = (state = initState, action) => {
         console.log('remove from cart clicked', action.error);
         return state;
     }
+    else if (action.type === "DELETE_LAPTOP") {
+        console.log('laptop deleted');
+        return {
+            ...state,
+            totalPrice: state.totalPrice - action.totalPrices
+        } 
+    }
+    else if (action.type === "DELETE_LAPTOP_ERROR") {
+        console.log('laptop deletion error', action.error);
+        return state;
+    }
     else if (action.type === 'INITIALISE_TOTAL') {
         console.log('initialising total', action.total);
         return {

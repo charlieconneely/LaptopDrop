@@ -6,6 +6,26 @@ export const changeDisplayDuringAsyncAction = () => {
     }
 }
 
+export const checkout = (laptopIDs, prices) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firestore = getFirestore();
+        var totalPrices = 0;
+        prices.forEach(p => {
+            totalPrices = totalPrices + p;
+        });
+        console.log("total prices: " + totalPrices);
+        console.log("checkout redux method called: " + laptopIDs);
+        console.log(laptopIDs[0]);
+        laptopIDs.forEach(e => {
+            firestore.collection('Laptops').doc(e).delete().then( () => {    
+                dispatch({type: 'DELETE_LAPTOP'}, totalPrices);  
+            }).catch( (error) => {
+                dispatch({type: 'DELETE_LAPTOP_ERROR', error});  
+            });
+        }); 
+    } 
+}
+
 export const postLaptop = (laptop) => {
 
     return (dispatch, getState, {getFirebase, getFirestore}) => {
@@ -25,7 +45,7 @@ export const uploadImage = (laptop) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firebase = getFirebase();
         var storageRef = firebase.storage().ref(`laptopImgs/${new Date().getTime()}`);
-        
+
         storageRef.put(laptop.image).then( (snapshot) => {
             dispatch({type: 'UPLOAD_IMAGE', snapshot});
             laptop.image = snapshot.metadata.name; // set the value of image to the name of the file on storage to avoid error in postLaptop

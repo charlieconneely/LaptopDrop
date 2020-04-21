@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { postLaptop, uploadImage, changeDisplayDuringAsyncAction } from '../store/actions/laptopActions';
 import { Container, Jumbotron, Form } from 'react-bootstrap';
 import PreviewPicture from './previewPicture';
-import { Redirect } from 'react-router-dom';
 
 class PostLaptop extends React.Component {
 
@@ -38,6 +37,7 @@ class PostLaptop extends React.Component {
     // postLaptop will be called from uploadImage after async action
     // is complete
     this.props.uploadImage(this.state);
+    // redirect to market 
     this.props.history.push('/market/');
   }
 
@@ -59,9 +59,7 @@ class PostLaptop extends React.Component {
     {this.state.uid = auth.uid}
 
     return (
-      // if state var is false - display waitingScreen, else - display the page
       <Container>
-
         <Jumbotron style={{backgroundImage:'none'}}>
           <Form onSubmit={this.handleSubmit} style={{marginTop:'0em'}}>
           
@@ -158,9 +156,6 @@ class PostLaptop extends React.Component {
                 <option>Non-functional</option>
               </Form.Control>
             </Form.Group>
-
-            {/* need to upload image to firebase storage
-            possible solution - https://www.youtube.com/watch?v=7UF7x5yLh44 */}
 
             <div className="input-field">
               <label htmlFor="image">Image</label> <br/><br/>

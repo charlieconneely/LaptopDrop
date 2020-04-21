@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { removeLaptopFromBasket, initialiseTotal } from '../store/actions/laptopActions';
+import { removeLaptopFromBasket, initialiseTotal, checkout } from '../store/actions/laptopActions';
 import { Row, Col, Container } from 'react-bootstrap';
 import PreviewPicture from './previewPicture';
 import '../App.css';
+import { act } from '@testing-library/react';
 
 class Basket extends Component {
   
@@ -13,6 +14,7 @@ class Basket extends Component {
     super(props);
     this.removeFromBasket = this.removeFromBasket.bind(this);
     this.initialiseTotal = this.initialiseTotal.bind(this);
+    this.CheckoutItems = this.CheckoutItems.bind(this);
     // id and price are only necessary fields - consider removing the rest 
     this.state = {
       brandname:'',
@@ -25,8 +27,14 @@ class Basket extends Component {
       id: null,
       basketID: null,
       initTotal: 0,
-      isInitialized: false
+      isInitialized: false,
+      ids: [],
+      prices: []
     }
+  }
+
+  CheckoutItems = (ids, prices) => {
+    this.props.checkout(ids, prices);
   }
 
   removeFromBasket = (id, price, uid) => {
@@ -93,7 +101,13 @@ class Basket extends Component {
                       this.state.initTotal += activePrice;
                       console.log("total: " + this.state.initTotal);
                       this.initialiseTotal(this.state.initTotal);
+
+                      this.setState(state => ({
+                        ids: [...state.ids, laptop.id],
+                        prices: [...state.prices, activePrice]
+                      }));
                     }        
+    
                     return (
                         /* filter through items for basketID(s) that match active UID  */
                         auth.uid === laptop.basketID ? 
@@ -118,7 +132,8 @@ class Basket extends Component {
             <h5>Total price: €{total.totalPrice}</h5> <br />
           </Row>
           <Row>
-            <button className="btn blue lighten-1 z-depth-0">Checkout</button>
+            <button className="btn blue lighten-1 z-depth-0" 
+            onClick={this.CheckoutItems.bind(this, this.state.ids, this.state.prices)}>Checkout</button>
           </Row>     
         </Container>
       ); 
@@ -138,7 +153,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     removeLaptopFromBasket: (laptop) => dispatch(removeLaptopFromBasket(laptop)),
-    initialiseTotal: (total) => dispatch(initialiseTotal(total))
+    initialiseTotal: (total) => dispatch(initialiseTotal(total)),
+    checkout: (laptopIDs, prices) => dispatch(checkout(laptopIDs, prices))
   }
 }
 
