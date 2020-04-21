@@ -20,7 +20,7 @@ class Basket extends Component {
       memory:'',
       price: 0,
       processor:'',
-      ram: null,
+      storage: null,
       screensize: null,
       id: null,
       basketID: null,
@@ -65,7 +65,7 @@ class Basket extends Component {
                   Cost: €{laptop.price}<br/> 
                   Storage: {laptop.memory} <br/>
                   Resolution: {laptop.screensize} <br/> 
-                  RAM: {laptop.ram} GB <br/> 
+                  Storage: {laptop.storage} <br/> 
                   Processor: {laptop.processor} <br/>  
                   <br/>
                   <footer className="blockquote-footer">

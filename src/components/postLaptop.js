@@ -14,7 +14,7 @@ class PostLaptop extends React.Component {
       memory:'',
       price: 0,
       processor:'',
-      ram: '',
+      storage: '',
       screensize: '',
       uid: null,
       basketID: null,
@@ -23,6 +23,7 @@ class PostLaptop extends React.Component {
     }   
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.displayPicture = this.displayPicture.bind(this);
   }   
   
   handleChange(e) {
@@ -58,42 +59,98 @@ class PostLaptop extends React.Component {
           <Form onSubmit={this.handleSubmit} style={{marginTop:'0em'}}>
           
             <h5 className="grey-text text-darken-3">Enter details below:</h5>
-            <div className="input-field">
-              <label htmlFor="brandname">Brand</label>
-              <input onChange={this.handleChange} value={this.state.brandname} type="text" id="brandname"></input>
-            </div>
+            
+            <Form.Group controlId="brandname" id="brandname" value={this.state.brandname}>
+              <Form.Label>Brand</Form.Label>  
+              <Form.Control as="select" onChange={this.handleChange}>
+                <option defaultValue= " "> </option>
+                <option>Asus</option>
+                <option>Apple</option>
+                <option>Acer</option>
+                <option>Alienware</option>
+                <option>Dell</option>
+                <option>HP</option>
+                <option>Lenovo</option>
+                <option>Razer</option>
+                <option>Toshiba</option>
+              </Form.Control>
+            </Form.Group>
   
-            <div className="input-field">
-              <label htmlFor="memory">Memory</label>
-              <input onChange={this.handleChange} value={this.state.memory} type="text" id="memory"></input>
-            </div>
+            <Form.Group controlId="memory" id="memory" value={this.state.memory}>
+              <Form.Label>Memory</Form.Label>  
+              <Form.Control as="select" onChange={this.handleChange}>
+                <option defaultValue= " "> </option>>
+                <option>32 GB</option>
+                <option>16 GB</option>
+                <option>12 GB</option>
+                <option>8 GB</option>
+                <option>4 GB</option>
+                <option>2 GB</option>
+              </Form.Control>
+            </Form.Group>
 
-            <div className="input-field">
-              <label htmlFor="processor">Processor</label>
-              <input onChange={this.handleChange} value={this.state.processor} type="text" id="processor"></input>
-            </div>
+            <Form.Group controlId="processor" id="processor" value={this.state.processor}>
+              <Form.Label>Processor</Form.Label>  
+              <Form.Control as="select" onChange={this.handleChange}>
+                <option defaultValue= " "> </option>
+                <option>Intel Core i9</option>
+                <option>Intel Core i7</option>
+                <option>Intel Core i5</option>
+                <option>Intel Core i3</option>
+                <option>Intel Pentium</option>
+                <option>Intel Celeron</option>
+                <option>AMD Ryzen 7</option>
+                <option>AMD Ryzen 5</option>
+                <option>AMD Ryzen 3</option>     
+              </Form.Control>
+            </Form.Group>
 
-            <div className="input-field">
-              <label htmlFor="ram">RAM</label>
-              <input onChange={this.handleChange} value={this.state.ram} type="number" id="ram"></input>
-            </div>
+            <Form.Group controlId="storage" id="storage" value={this.state.storage}>
+              <Form.Label>Storage</Form.Label>  
+              <Form.Control as="select" onChange={this.handleChange}>
+                <option defaultValue= " "> </option>
+                <option>2 TB</option> 
+                <option>1 TB</option> 
+                <option>512 GB</option> 
+                <option>256 GB</option> 
+                <option>124 GB</option>
+                <option>64 GB</option>  
+                <option>32 GB</option> 
+                <option>16 GB</option>   
+              </Form.Control>
+            </Form.Group>
 
-            <div className="input-field">
-              <label htmlFor="ram">Screensize</label>
-              <input onChange={this.handleChange} value={this.state.screensize} type="number" id="screensize"></input>
-            </div>
+            <Form.Group controlId="screensize" id="screensize" value={this.state.screensize}>
+              <Form.Label>Screensize</Form.Label>  
+              <Form.Control as="select" onChange={this.handleChange}>
+                <option defaultValue= " "> </option>
+                <option>15.6</option> 
+                <option>15</option> 
+                <option>14</option> 
+                <option>13.3</option> 
+                <option>13</option>
+                <option>12.3</option>  
+                <option>12</option> 
+                <option>11.6</option>
+                <option>10</option>   
+              </Form.Control>
+            </Form.Group>
 
             <div className="input-field">
               <label htmlFor="price">Price</label>
               <input onChange={this.handleChange} value={this.state.price} type="number" id="price"></input> 
             </div>
 
-            <div className="input-field">
-              <label htmlFor="condition">Condition</label>
-              <input onChange={this.handleChange}
-                     value={this.state.condition}
-                     type="text" id="condition"></input>
-            </div>
+            <Form.Group controlId="condition" id="condition" value={this.state.condition}>
+              <Form.Label>Condition</Form.Label>  
+              <Form.Control as="select" onChange={this.handleChange}>
+                <option defaultValue= " "> </option>
+                <option>Perfect</option> 
+                <option>Good</option> 
+                <option>Bad</option> 
+                <option>Non-functional</option>
+              </Form.Control>
+            </Form.Group>
 
             {/* need to upload image to firebase storage
             possible solution - https://www.youtube.com/watch?v=7UF7x5yLh44 */}
@@ -103,7 +160,7 @@ class PostLaptop extends React.Component {
               <input type="file" id="image"
                onChange={(event) => {
                 this.displayPicture(event);
-             }}></input>
+              }}></input>
              <PreviewPicture imageURL={this.state.imageURL}/>
             </div> 
               
