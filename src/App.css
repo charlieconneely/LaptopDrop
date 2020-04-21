@@ -7,6 +7,13 @@
   font-style: oblique;
 }
 
+.emptyBasket {
+  margin-top: 100px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
 .items {
   text-align: center;
   background-color: #DAD9D8;

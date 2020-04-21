@@ -1,6 +1,11 @@
 //  make async actions with database using redux store and thunk 
 
-// need to remove raw data and replace with user input
+export const changeDisplayDuringAsyncAction = () => {
+    return(dispatch) => {
+        dispatch({type:'CHANGE_ASYNC_STATUS'});
+    }
+}
+
 export const postLaptop = (laptop) => {
 
     return (dispatch, getState, {getFirebase, getFirestore}) => {
@@ -9,6 +14,7 @@ export const postLaptop = (laptop) => {
             ...laptop  
         }).then( () => {
             dispatch({type: 'POST_LAPTOP', laptop});  
+            dispatch(changeDisplayDuringAsyncAction()); // turn of waiting screen 
         }).catch( (error) => {
             dispatch({type: 'POST_LAPTOP_ERROR', error});  
         })
@@ -18,8 +24,8 @@ export const postLaptop = (laptop) => {
 export const uploadImage = (laptop) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firebase = getFirebase();
-         // need to find a unique ID instead of using the time
         var storageRef = firebase.storage().ref(`laptopImgs/${new Date().getTime()}`);
+        
         storageRef.put(laptop.image).then( (snapshot) => {
             dispatch({type: 'UPLOAD_IMAGE', snapshot});
             laptop.image = snapshot.metadata.name; // set the value of image to the name of the file on storage to avoid error in postLaptop

@@ -1,0 +1,6 @@
+.waitingScreen {
+    margin-top: 100px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}

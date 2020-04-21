@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { postLaptop, uploadImage } from '../store/actions/laptopActions';
+import { postLaptop, uploadImage, changeDisplayDuringAsyncAction } from '../store/actions/laptopActions';
 import { Container, Jumbotron, Form } from 'react-bootstrap';
 import PreviewPicture from './previewPicture';
+import { Redirect } from 'react-router-dom';
 
 class PostLaptop extends React.Component {
 
@@ -32,9 +33,12 @@ class PostLaptop extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    // turn on waiting screen 
+    this.props.changeDisplayDuringAsyncAction(); 
     // postLaptop will be called from uploadImage after async action
     // is complete
     this.props.uploadImage(this.state);
+    this.props.history.push('/market/');
   }
 
   displayPicture(event) {
@@ -53,8 +57,11 @@ class PostLaptop extends React.Component {
     const {auth} = this.props;
     // set uid in firestore db to acitve uid 
     {this.state.uid = auth.uid}
+
     return (
+      // if state var is false - display waitingScreen, else - display the page
       <Container>
+
         <Jumbotron style={{backgroundImage:'none'}}>
           <Form onSubmit={this.handleSubmit} style={{marginTop:'0em'}}>
           
@@ -180,7 +187,8 @@ const mapDispatchToProps = (dispatch) => {
         // calls dipatch to postLaptop method in laptopActions.js
         // providing laptop from current state 
         uploadImage: (laptop) => dispatch(uploadImage(laptop)),
-        postLaptop: (laptop) => dispatch(postLaptop(laptop)) 
+        postLaptop: (laptop) => dispatch(postLaptop(laptop)),
+        changeDisplayDuringAsyncAction: () => dispatch(changeDisplayDuringAsyncAction())
     }
 }
 

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-//import LaptopItem from './items/laptopItem';
-// import LaptopCard from './items/laptopCard';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Row, Col, Container } from 'react-bootstrap';
 import PreviewPicture from './previewPicture';
 import { addLaptopToBasket, removeLaptopFromBasket } from '../store/actions/laptopActions';
+import WaitingScreen from './WaitingScreen/waitingScreen'
+import './WaitingScreen/waitingScreen.css';
 import '../App.css';
 
 
@@ -56,6 +56,7 @@ class Market extends Component {
   render() {
     const {laptops} = this.props;
     const {auth} = this.props;
+    const {asyncActionStatus} = this.props;
 
     const LaptopCard = ({laptop}) => {
 
@@ -114,6 +115,7 @@ class Market extends Component {
   }
 
     return (   
+        asyncActionStatus === false ? <WaitingScreen /> : 
         <div className="container">    
             <h3 className="center">Our Items</h3>
             <div className="row">          
@@ -136,7 +138,8 @@ const mapStateToProps = (state) => {
   return {
     // map laptops const to Laptops collection in firestore
     laptops: state.firestore.ordered.Laptops,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    asyncActionStatus: state.laptop.asyncActionFinished
   }
 }
 

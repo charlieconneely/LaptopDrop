@@ -108,13 +108,19 @@ class Basket extends Component {
     }
 
       return (   
-        <div className="container">    
-          <div className="row">         
+        total.totalPrice === 0 ? 
+        <div className="emptyBasket">
+          <h4>Your basket is empty.</h4>
+        </div> : 
+        <Container>    
+          <Row>         
             <BasketItem laptops={laptops}/>                 
-            <h5>Total price: {total.totalPrice}</h5>
+            <h5>Total price: €{total.totalPrice}</h5> <br />
+          </Row>
+          <Row>
             <button className="btn blue lighten-1 z-depth-0">Checkout</button>
-          </div>     
-        </div>
+          </Row>     
+        </Container>
       ); 
     }
   }

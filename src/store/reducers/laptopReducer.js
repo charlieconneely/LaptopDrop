@@ -1,7 +1,8 @@
 
 const initState = {
     totalPrice: 0,
-    imageName: ''
+    imageName: '',
+    asyncActionFinished: true
 }
 
 const laptopReducer = (state = initState, action) => {
@@ -13,6 +14,19 @@ const laptopReducer = (state = initState, action) => {
     else if (action.type === 'POST_LAPTOP_ERROR') {
         console.log('post laptop error', action.error);
         return state;
+    }
+    else if (action.type === 'CHANGE_ASYNC_STATUS') {
+        if (state.asyncActionFinished) {
+            return {
+                ...state,
+                asyncActionFinished: false
+            }
+        } else {
+            return {
+                ...state,
+                asyncActionFinished: true
+            }
+        }
     }
     else if (action.type === 'UPLOAD_IMAGE') {
         console.log('uploaded image to firebase storage');
