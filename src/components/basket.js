@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { removeLaptopFromBasket, initialiseTotal, checkout } from '../store/actions/laptopActions';
+import { removeLaptopFromBasket, initialiseTotal, checkout, changeDisplayDuringAsyncAction } from '../store/actions/laptopActions';
 import { Row, Col, Container } from 'react-bootstrap';
 import PreviewPicture from './previewPicture';
+import WaitingScreen from './WaitingScreen/waitingScreen';
 import '../App.css';
-import { act } from '@testing-library/react';
 
 class Basket extends Component {
   
@@ -34,7 +34,8 @@ class Basket extends Component {
   }
 
   CheckoutItems = (ids, prices) => {
-    this.props.checkout(ids, prices);
+    this.props.changeDisplayDuringAsyncAction();
+    this.props.checkout(ids, prices);   
   }
 
   removeFromBasket = (id, price, uid) => {
@@ -56,6 +57,7 @@ class Basket extends Component {
       const {laptops} = this.props;
       const {auth} = this.props;
       const {total} = this.props;
+      const {asyncActionStatus} = this.props;
 
       const BasketCard = ({laptop}) => {
         console.log("price: " + laptop.price);
@@ -122,7 +124,10 @@ class Basket extends Component {
     }
 
       return (   
-        total.totalPrice === 0 ? 
+        // if the async action from checkout is not yet complete - 
+        // display the waiting screen 
+        asyncActionStatus === false ? <WaitingScreen /> : 
+        total.totalPrice === 0 && this.state.isInitialized ? 
         <div className="emptyBasket">
           <h4>Your basket is empty.</h4>
         </div> : 
@@ -146,7 +151,8 @@ const mapStateToProps = (state) => {
     // map laptops const to Laptops collection in firestore
     laptops: state.firestore.ordered.Laptops,
     auth: state.firebase.auth,
-    total: state.laptop
+    total: state.laptop,
+    asyncActionStatus: state.laptop.asyncActionFinished
   } 
 }
   
@@ -154,7 +160,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     removeLaptopFromBasket: (laptop) => dispatch(removeLaptopFromBasket(laptop)),
     initialiseTotal: (total) => dispatch(initialiseTotal(total)),
-    checkout: (laptopIDs, prices) => dispatch(checkout(laptopIDs, prices))
+    checkout: (laptopIDs, prices) => dispatch(checkout(laptopIDs, prices)),
+    changeDisplayDuringAsyncAction: () => dispatch(changeDisplayDuringAsyncAction())
   }
 }
 

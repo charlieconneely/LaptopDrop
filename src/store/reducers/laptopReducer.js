@@ -71,7 +71,7 @@ const laptopReducer = (state = initState, action) => {
         console.log('laptop deleted');
         return {
             ...state,
-            totalPrice: state.totalPrice - action.totalPrices
+            totalPrice: 0
         } 
     }
     else if (action.type === "DELETE_LAPTOP_ERROR") {

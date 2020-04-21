@@ -10,12 +10,15 @@ export const checkout = (laptopIDs, prices) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
         var totalPrices = 0;
+        // add up prices of laptops passed through the params
+        // to be passed to reducer to update total price on state
         prices.forEach(p => {
             totalPrices = totalPrices + p;
         });
         console.log("total prices: " + totalPrices);
-        console.log("checkout redux method called: " + laptopIDs);
-        console.log(laptopIDs[0]);
+        console.log("checkout redux method called");
+        // filter through the array of laptop ids passed from params
+        // delete each item from the database
         laptopIDs.forEach(e => {
             firestore.collection('Laptops').doc(e).delete().then( () => {    
                 dispatch({type: 'DELETE_LAPTOP'}, totalPrices);  
@@ -23,6 +26,7 @@ export const checkout = (laptopIDs, prices) => {
                 dispatch({type: 'DELETE_LAPTOP_ERROR', error});  
             });
         }); 
+        dispatch({type:'CHANGE_ASYNC_STATUS'}); // turn off wait screen 
     } 
 }
 
@@ -34,7 +38,7 @@ export const postLaptop = (laptop) => {
             ...laptop  
         }).then( () => {
             dispatch({type: 'POST_LAPTOP', laptop});  
-            dispatch(changeDisplayDuringAsyncAction()); // turn of waiting screen 
+            dispatch({type:'CHANGE_ASYNC_STATUS'}); // turn of waiting screen 
         }).catch( (error) => {
             dispatch({type: 'POST_LAPTOP_ERROR', error});  
         })
