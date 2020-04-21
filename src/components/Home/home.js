@@ -20,7 +20,7 @@ class Home extends React.Component {
       <div>      
         <Container>
           <Jumbotron>
-            <h2>Welcome to PC Marketplace</h2>
+            <h2>Welcome to Laptop-Drop</h2>
             <p>A place where you can browse, buy and sell second-hand laptops.</p>
       
             {button}

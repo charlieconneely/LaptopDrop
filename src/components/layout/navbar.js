@@ -13,7 +13,7 @@ const Navbar = (props) => {
     return (       
          <nav className="nav-wrapper grey darken-3">       
             <div>
-                &emsp; <Link to='/' className="brand-logo">PC MARKETPLACE</Link>
+                &emsp; <Link to='/' className="brand-logo">LAPTOP-DROP</Link>
                 {links}
             </div>            
         </nav>
