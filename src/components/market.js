@@ -117,12 +117,12 @@ class Market extends Component {
     return (   
         // if state var is false - display waitingScreen, else - display the page
         asyncActionStatus === false ? <WaitingScreen /> : 
-        <div className="container">    
+        <Container>    
             <h3 className="center">Our Items</h3>
-            <div className="row">          
+            <Row>          
               <LaptopItem laptops={laptops}/> 
-            </div>      
-        </div>
+            </Row>      
+        </Container>
       ); 
     }
   }

@@ -28,14 +28,13 @@ class Basket extends Component {
       basketID: null,
       initTotal: 0,
       isInitialized: false,
-      ids: [],
-      prices: []
+      ids: []
     }
   }
 
-  CheckoutItems = (ids, prices) => {
+  CheckoutItems = (ids) => {
     this.props.changeDisplayDuringAsyncAction();
-    this.props.checkout(ids, prices);   
+    this.props.checkout(ids);   
   }
 
   removeFromBasket = (id, price, uid) => {
@@ -105,9 +104,8 @@ class Basket extends Component {
                       this.initialiseTotal(this.state.initTotal);
 
                       this.setState(state => ({
-                        ids: [...state.ids, laptop.id],
-                        prices: [...state.prices, activePrice]
-                      }));
+                        ids: [...state.ids, laptop.id]
+                        }));
                     }        
     
                     return (
@@ -138,7 +136,7 @@ class Basket extends Component {
           </Row>
           <Row>
             <button className="btn blue lighten-1 z-depth-0" 
-            onClick={this.CheckoutItems.bind(this, this.state.ids, this.state.prices)}>Checkout</button>
+            onClick={this.CheckoutItems.bind(this, this.state.ids)}>Checkout</button>
           </Row>     
         </Container>
       ); 
@@ -160,7 +158,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     removeLaptopFromBasket: (laptop) => dispatch(removeLaptopFromBasket(laptop)),
     initialiseTotal: (total) => dispatch(initialiseTotal(total)),
-    checkout: (laptopIDs, prices) => dispatch(checkout(laptopIDs, prices)),
+    checkout: (laptopIDs) => dispatch(checkout(laptopIDs)),
     changeDisplayDuringAsyncAction: () => dispatch(changeDisplayDuringAsyncAction())
   }
 }

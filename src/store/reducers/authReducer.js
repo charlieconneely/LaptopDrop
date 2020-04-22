@@ -4,20 +4,20 @@ const initState = {
 }
 
 const authReducer = (state = initState, action) => {  
-    if (action.type === 'LOGIN_ERROR') {
-        console.log('login error');
-        return {
-            ...state,
-            authError: 'Login failed'
-        }      
-    }
-    else if (action.type === 'LOGIN_SUCCESS') {
+    if (action.type === 'LOGIN_SUCCESS') {
         console.log('login success');
         console.log(state);
         return {
             ...state,
             authError: null
         }
+    }
+    else if (action.type === 'LOGIN_ERROR') {
+        console.log('login error');
+        return {
+            ...state,
+            authError: 'Login failed'
+        }      
     }
     else if (action.type === 'LOGOUT_SUCCESS') {
         console.log('logout success');

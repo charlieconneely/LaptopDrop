@@ -1,8 +1,8 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
-import '../../App.css';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux'; 
 import { signOut } from '../../store/actions/authActions';
+import '../../App.css';
 
 const SingedInLinks = (props) => {
     return (

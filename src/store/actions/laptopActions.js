@@ -1,27 +1,22 @@
-//  make async actions with database using redux store and thunk 
 
+// change bool variable - which will replace screen with "Please Wait"
+// until async action is complete  
 export const changeDisplayDuringAsyncAction = () => {
     return(dispatch) => {
         dispatch({type:'CHANGE_ASYNC_STATUS'});
     }
 }
 
-export const checkout = (laptopIDs, prices) => {
+export const checkout = (laptopIDs) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
-        var totalPrices = 0;
-        // add up prices of laptops passed through the params
-        // to be passed to reducer to update total price on state
-        prices.forEach(p => {
-            totalPrices = totalPrices + p;
-        });
-        console.log("total prices: " + totalPrices);
+      
         console.log("checkout redux method called");
         // filter through the array of laptop ids passed from params
         // delete each item from the database
         laptopIDs.forEach(e => {
             firestore.collection('Laptops').doc(e).delete().then( () => {    
-                dispatch({type: 'DELETE_LAPTOP'}, totalPrices);  
+                dispatch({type: 'DELETE_LAPTOP'});  
             }).catch( (error) => {
                 dispatch({type: 'DELETE_LAPTOP_ERROR', error});  
             });

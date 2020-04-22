@@ -1,9 +1,10 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
-import '../../App.css';
-import {connect} from 'react-redux'
-import {signIn} from '../../store/actions/authActions'
+import {connect} from 'react-redux';
+import {signIn} from '../../store/actions/authActions';
 import {Redirect} from 'react-router-dom';
+import { Container, Form } from 'react-bootstrap';
+import '../../App.css';
+
 
 class Login extends React.Component {
 
@@ -29,8 +30,8 @@ class Login extends React.Component {
 
     return (
       // Login page
-      <div className="container">
-        <form className="white" onSubmit={this.handleSubmit}>
+      <Container>
+        <Form className="white" onSubmit={this.handleSubmit}>
 
           <h5 className="grey-text text-darken-3">Login</h5>
           <div className="input-field">
@@ -48,11 +49,8 @@ class Login extends React.Component {
               {authError ? <p>{authError}</p> : null}
             </div>
           </div>
-        </form>
-        <Helmet>
-          <style>{'body { background-color: #DAD9D8; }'}</style>        
-        </Helmet>
-      </div>
+        </Form>
+      </Container>
     );
   }
 }
