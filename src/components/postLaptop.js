@@ -56,8 +56,11 @@ class PostLaptop extends React.Component {
   render() {
     const {auth} = this.props;
     // set uid in firestore db to acitve uid 
-    {this.state.uid = auth.uid}
-
+    this.setState({
+      ...this.state,
+      uid: auth.uid
+    })
+    
     return (
       <Container>
         <Jumbotron style={{backgroundImage:'none'}}>

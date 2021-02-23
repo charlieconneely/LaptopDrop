@@ -9,13 +9,13 @@ import WaitingScreen from './WaitingScreen/waitingScreen';
 import '../App.css';
 
 class Basket extends Component {
-  
+
   constructor(props) {
     super(props);
     this.removeFromBasket = this.removeFromBasket.bind(this);
     this.initialiseTotal = this.initialiseTotal.bind(this);
     this.CheckoutItems = this.CheckoutItems.bind(this);
-    // id and price are only necessary fields - consider removing the rest 
+    // id and price are only necessary fields - consider removing the rest
     this.state = {
       brandname:'',
       condition:'',
@@ -28,27 +28,29 @@ class Basket extends Component {
       basketID: null,
       initTotal: 0,
       isInitialized: false,
-      ids: []
+      ids: [],
+      imageIDs: []
     }
   }
 
-  CheckoutItems = (ids) => {
+  CheckoutItems = (ids, imgs) => {
     this.props.changeDisplayDuringAsyncAction();
-    this.props.checkout(ids);   
+    this.props.checkout(ids, imgs);
   }
 
   removeFromBasket = (id, price, uid) => {
-    console.log("id selected: " + id);
-    console.log("uid: " + uid);
     // set state id and basketID values
-    this.state.id = id;
-    this.state.price = price;
-    // call redux function 
+    this.setState({
+      ...this.state,
+      id: id,
+      price: price
+    })
+    // call redux function
     this.props.removeLaptopFromBasket(this.state);
-  } 
+  }
 
   initialiseTotal = (total) => {
-    // initialise the totalprice in the state with the price of all items in the basket 
+    // initialise the totalprice in the state with the price of all items in the basket
     this.props.initialiseTotal(total);
   }
 
@@ -60,7 +62,6 @@ class Basket extends Component {
 
       const BasketCard = ({laptop}) => {
         console.log("price: " + laptop.price);
-        // TODO - re-style basket similar to that of market.js 
         return (
           <div className="laptopDetails">
             <Container >
@@ -70,17 +71,17 @@ class Basket extends Component {
                 </Col>
                 <Col>
                   <header>{laptop.brandname}</header>
-                    
-                  Cost: €{laptop.price}<br/> 
+
+                  Cost: €{laptop.price}<br/>
                   Storage: {laptop.memory} <br/>
-                  Resolution: {laptop.screensize} <br/> 
-                  Storage: {laptop.storage} <br/> 
-                  Processor: {laptop.processor} <br/>  
+                  Resolution: {laptop.screensize} <br/>
+                  Storage: {laptop.storage} <br/>
+                  Processor: {laptop.processor} <br/>
                   <br/>
                   <footer className="blockquote-footer">
-                      Condition: {laptop.condition} 
+                      Condition: {laptop.condition}
                   </footer>
-                </Col>     
+                </Col>
               </Row>
               <Row style={{justifyContent:'center', fontStyle:'normal'}}>
                 <button className="btn red lighten-1 z-depth-0"
@@ -90,56 +91,59 @@ class Basket extends Component {
             </Container>
           </div>
         )
-    }      
+    }
 
       const BasketItem = ({laptops}) => {
 
         return (
-            <div>    
-                {laptops && laptops.map(laptop => {      
-                    if (laptop.basketID === auth.uid && this.state.isInitialized === false) {              
-                      var activePrice = parseFloat(laptop.price);       
-                      this.state.initTotal += activePrice;
-                      console.log("total: " + this.state.initTotal);
+            <div>
+                {laptops && laptops.map(laptop => {
+                    if (laptop.basketID === auth.uid && this.state.isInitialized === false) {
+                      var activePrice = parseFloat(laptop.price);
+                      this.setState({
+                        ...this.state,
+                        initTotal: this.state.initTotal + activePrice
+                      })
                       this.initialiseTotal(this.state.initTotal);
-
                       this.setState(state => ({
-                        ids: [...state.ids, laptop.id]
-                        }));
-                    }        
-    
+                        ids: [...state.ids, laptop.id],
+                        imageIDs: [...state.imageIDs, laptop.image]
+                      }));
+                    }
+
                     return (
                         /* filter through items for basketID(s) that match active UID  */
-                        auth.uid === laptop.basketID ? 
+                        auth.uid === laptop.basketID ?
                         <div className="container">
-                          <BasketCard laptop={laptop} key={laptop.id} /> 
+                          <BasketCard laptop={laptop} key={laptop.id} />
                         </div> : null
                     )
                 })}
-                {this.state.isInitialized = true}
+                {this.setState({...this.state, isInitialized: true})}
             </div>
-        )         
+        )
     }
 
-      return (   
-        // if the async action from checkout is not yet complete - 
-        // display the waiting screen 
-        asyncActionStatus === false ? <WaitingScreen /> : 
-        total.totalPrice === 0 && this.state.isInitialized ? 
+      return (
+        // if the async action from checkout is not yet complete -
+        // display the waiting screen
+        asyncActionStatus === false ? <WaitingScreen /> :
+        total.totalPrice === 0 && this.state.isInitialized ?
         <div className="emptyBasket">
           <h4>Your basket is empty.</h4>
-        </div> : 
-        <Container>    
-          <Row>         
-            <BasketItem laptops={laptops}/>                 
+        </div> :
+        <Container>
+          <Row>
+            <BasketItem laptops={laptops}/>
             <h5>Total price: €{total.totalPrice}</h5> <br />
           </Row>
           <Row>
-            <button className="btn blue lighten-1 z-depth-0" 
-            onClick={this.CheckoutItems.bind(this, this.state.ids)}>Checkout</button>
-          </Row>     
+            <button className="btn blue lighten-1 z-depth-0"
+            onClick={this.CheckoutItems.bind(this, this.state.ids,
+              this.state.imageIDs)}>Checkout</button>
+          </Row>
         </Container>
-      ); 
+      );
     }
   }
 
@@ -151,20 +155,20 @@ const mapStateToProps = (state) => {
     auth: state.firebase.auth,
     total: state.laptop,
     asyncActionStatus: state.laptop.asyncActionFinished
-  } 
+  }
 }
-  
+
 const mapDispatchToProps = (dispatch) => {
   return {
     removeLaptopFromBasket: (laptop) => dispatch(removeLaptopFromBasket(laptop)),
     initialiseTotal: (total) => dispatch(initialiseTotal(total)),
-    checkout: (laptopIDs) => dispatch(checkout(laptopIDs)),
+    checkout: (laptopIDs, imageIDs) => dispatch(checkout(laptopIDs, imageIDs)),
     changeDisplayDuringAsyncAction: () => dispatch(changeDisplayDuringAsyncAction())
   }
 }
 
 // info on connect() - https://blog.logrocket.com/react-redux-connect-when-and-how-to-use-it-f2a1edab2013/
-// compose impelemented to connect both state and firestore db to Basket 
+// compose impelemented to connect both state and firestore db to Basket
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect([

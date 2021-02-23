@@ -7,10 +7,6 @@ import './home.css';
 
 class Home extends React.Component {
 
-  constructor (props) {
-    super(props);
-  }
-
   render() {
     const {auth} = this.props;
     const button = auth.uid ? <Link to="/market"><Button>BROWSE</Button></Link> : 

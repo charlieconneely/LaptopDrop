@@ -16,7 +16,7 @@ class Market extends Component {
     super(props);
     this.addToBasket = this.addToBasket.bind(this);
     this.removeFromBasket = this.removeFromBasket.bind(this);
-    // id is only necessary field - consider removing the rest 
+    // id is only necessary field - consider removing the rest
     this.state = {
       brandname:'',
       condition:'',
@@ -32,27 +32,29 @@ class Market extends Component {
   }
 
   addToBasket = (id, price, uid) => {
-    console.log("id selected: " + id);
-    console.log("uid: " + uid);
     // set state id and basketID to values sent from button click
-    this.state.id = id;
-    this.state.price = price;
-    this.state.basketID = uid;
-    // call redux function 
+    this.setState({
+      ...this.state,
+      id: id,
+      price: price,
+      basketID: uid
+    });
+    // call redux function
     this.props.addLaptopToBasket(this.state);
-  } 
+  }
 
   removeFromBasket = (id, price, uid) => {
-    console.log("id selected: " + id);
-    console.log("uid: " + uid);
     // set state id and basketID values
-    this.state.id = id;
-    this.state.price = price;
-    this.state.basketID = null;
-    // call redux function 
+    this.setState({
+      ...this.state,
+      id: id,
+      price: price,
+      basketID: null
+    })
+    // call redux function
     this.props.removeLaptopFromBasket(this.state);
-  } 
-  
+  }
+
   render() {
     const {laptops} = this.props;
     const {auth} = this.props;
@@ -64,7 +66,7 @@ class Market extends Component {
       // check if laptop item is already in the basket of the user
       // - display the appropriate button
       if (auth.uid !== laptop.basketID) {
-        button = <button className="btn blue lighten-1 z-depth-0" 
+        button = <button className="btn blue lighten-1 z-depth-0"
         onClick={this.addToBasket.bind(this,laptop.id, laptop.price, auth.uid)}>Add to Cart</button>
       } else {
         button = <button className="btn red lighten-1 z-depth-0"
@@ -80,17 +82,17 @@ class Market extends Component {
               </Col>
               <Col>
                 <header>{laptop.brandname}</header>
-                  
-                Cost: €{laptop.price}<br/> 
+
+                Cost: €{laptop.price}<br/>
                 Storage: {laptop.memory} <br/>
-                Resolution: {laptop.screensize} <br/> 
-                Storage: {laptop.storage} <br/> 
-                Processor: {laptop.processor} <br/>  
+                Resolution: {laptop.screensize} <br/>
+                Storage: {laptop.storage} <br/>
+                Processor: {laptop.processor} <br/>
                 <br/>
                 <footer className="blockquote-footer">
-                    Condition: {laptop.condition} 
+                    Condition: {laptop.condition}
                 </footer>
-              </Col>     
+              </Col>
             </Row>
             <Row style={{justifyContent:'center', fontStyle:'normal'}}>{button}</Row>
             <hr />
@@ -101,8 +103,8 @@ class Market extends Component {
 
     const LaptopItem = ({laptops}) => {
       return (
-          <div>    
-              {laptops && laptops.map(laptop => {              
+          <div>
+              {laptops && laptops.map(laptop => {
                   return (
                     auth.uid === laptop.basketID || laptop.basketID === null ?
                     <div className="container">
@@ -111,19 +113,19 @@ class Market extends Component {
                   )
               })}
           </div>
-      )         
+      )
   }
 
-    return (   
+    return (
         // if state var is false - display waitingScreen, else - display the page
-        asyncActionStatus === false ? <WaitingScreen /> : 
-        <Container>    
+        asyncActionStatus === false ? <WaitingScreen /> :
+        <Container>
             <h3 className="center">Our Items</h3>
-            <Row>          
-              <LaptopItem laptops={laptops}/> 
-            </Row>      
+            <Row>
+              <LaptopItem laptops={laptops}/>
+            </Row>
         </Container>
-      ); 
+      );
     }
   }
 
@@ -145,7 +147,7 @@ const mapStateToProps = (state) => {
 }
 
 // info on connect() - https://blog.logrocket.com/react-redux-connect-when-and-how-to-use-it-f2a1edab2013/
-// compose impelemented to connect both state and firestore db to Market 
+// compose impelemented to connect both state and firestore db to Market
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect([{collection: 'Laptops'}]))(Market);

@@ -85,6 +85,14 @@ const laptopReducer = (state = initState, action) => {
             totalPrice: action.total
         }
     }
+    else if (action.type === 'DELETE_IMAGE') {
+        console.log('image deleted from storage');
+        return state;
+    }
+    else if (action.type === 'DELETE_IMAGE_ERROR') {
+        console.log('stoage image deletion error', action.error);
+        return state;
+    }
     else {
         return state;
     }
