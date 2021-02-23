@@ -21,7 +21,7 @@ const Footer = () => {
                     </Col>
                     <Col className="col-md-3 col-sm-6">
                         <h3>Contact Us</h3>                  
-                        <p>g00348887@gmit.ie</p>
+                        <p>charlieconneely.cc@gmail.com</p>
                         <p>(091) 123 4567</p> 
                         <p>customercare@laptopdrop.ie</p>    
                         <p>Facebook - laptopdrop</p>                  
